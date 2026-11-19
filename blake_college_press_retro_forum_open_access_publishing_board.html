@@ -1,0 +1,3390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blake College Press — Retro Forum &amp; Interdisciplinary Publishing House</title>
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="" />
+
+  <style>
+    /* ==========================================================================
+       BLAKE COLLEGE PRESS — RETRO FORUM STYLESHEET
+       Old Reddit (old.reddit.com) + Classic XenForo / vBulletin Board
+       Pure #FFFFFF background, 0px border-radius, zero box-shadows.
+       ========================================================================== */
+    :root {
+      --bg-page: #FFFFFF;
+      --bg-utility: #F0F3F5;
+      --border-utility: #C8D1D9;
+      --bg-reddit-banner: #CEE3F8;
+      --border-reddit-banner: #5F99CF;
+      --bg-tab-inactive: #EFF7FF;
+      --bg-xen-header: #2B4C7E;
+      --border-xen-header: #1D3559;
+      --bg-row-alt: #F6F8FA;
+      --border-hairline: #D8DFE6;
+      --border-control: #8C9BA5;
+      --text-main: #111111;
+      --text-muted: #555555;
+      --text-subtle: #666F78;
+      --link-unvisited: #0000FF;
+      --link-navy: #2B4C7E;
+      --link-visited: #551A8B;
+      --accent-reddit: #FF4500;
+      --accent-green: #1A7F37;
+      --bg-scriptorium: #1F2937;
+      --font-ui: Verdana, Tahoma, Arial, sans-serif;
+      --font-serif: Georgia, "Times New Roman", serif;
+      --font-mono: Consolas, "Courier New", monospace;
+    }
+
+    /* Strict Retro Forum Geometry: 0px border-radius & 0 box-shadows globally */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      border-radius: 0px !important;
+      box-shadow: none !important;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+
+    /* Classic Link Wayfinding: #0000FF unvisited, #551A8B visited purple */
+    a, .forum-link {
+      color: var(--link-unvisited);
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    a:hover, .forum-link:hover {
+      text-decoration: underline;
+    }
+
+    a:visited, .forum-link.visited {
+      color: var(--link-visited);
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ==========================================================================
+       EMBEDDED BLAKE COLLEGE PRESS SEAL IMAGES
+       ========================================================================== */
+    .bcp-seal-img {
+      display: block;
+      object-fit: contain;
+    }
+
+    /* High-contrast black-and-white woodcut filter when toggled */
+    body.woodcut-ink-mode .bcp-seal-img.toggleable-seal {
+      filter: grayscale(100%) contrast(235%) brightness(106%);
+    }
+
+    /* Permanent woodcut monochrome stamp on printable Typst PDF specimen */
+    .bcp-seal-img.typst-woodcut-stamp {
+      filter: grayscale(100%) contrast(235%) brightness(106%);
+    }
+
+    /* ==========================================================================
+       1. TOP UTILITY BAR (#F0F3F5, 11px Verdana/Tahoma)
+       ========================================================================== */
+    .top-utility-strip {
+      background-color: var(--bg-utility);
+      border-bottom: 1px solid var(--border-utility);
+      padding: 4px 12px;
+      font-size: 11px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .utility-nav-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .util-btn {
+      background: transparent;
+      border: none;
+      padding: 1px 2px;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .util-btn:hover {
+      text-decoration: underline;
+      color: var(--link-navy);
+    }
+
+    .util-btn.active {
+      font-weight: bold;
+      color: var(--accent-reddit);
+    }
+
+    .utility-nav-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+    }
+
+    .seal-control-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-utility);
+      padding: 2px 6px;
+    }
+
+    .ink-opt-btn {
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .ink-opt-btn.active {
+      font-weight: bold;
+      color: var(--link-navy);
+      text-decoration: underline;
+    }
+
+    .upload-seal-btn {
+      background-color: #EFF7FF;
+      border: 1px solid #5F99CF;
+      color: #1D3559;
+      padding: 2px 6px;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .upload-seal-btn:hover {
+      background-color: #CEE3F8;
+    }
+
+    .scriptorium-toggle-btn {
+      background-color: var(--bg-xen-header);
+      color: #FFFFFF;
+      border: 1px solid var(--border-xen-header);
+      padding: 2px 8px;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .scriptorium-toggle-btn:hover {
+      background-color: var(--bg-scriptorium);
+    }
+
+    /* ==========================================================================
+       2. MAIN MASTHEAD BANNER (#CEE3F8 Old-Reddit / #1F2937 Scriptorium)
+       ========================================================================== */
+    .masthead-banner {
+      background-color: var(--bg-reddit-banner);
+      border-bottom: 1px solid var(--border-reddit-banner);
+      padding: 10px 14px 0 14px;
+      color: var(--text-main);
+    }
+
+    .masthead-banner.scriptorium-mode {
+      background-color: var(--bg-scriptorium);
+      border-bottom: 2px solid #111827;
+      color: #FFFFFF;
+    }
+
+    .masthead-inner-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 8px;
+    }
+
+    .masthead-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .masthead-seal-wrap {
+      width: 82px;
+      height: 82px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: #FFFFFF;
+      border: 1px solid #5F99CF;
+      padding: 2px;
+    }
+
+    /* In Scriptorium mode, keep the seal inside a crisp #FFFFFF square frame */
+    .masthead-banner.scriptorium-mode .masthead-seal-wrap {
+      width: 78px;
+      height: 78px;
+      background-color: #FFFFFF;
+      border: 1px solid #9CA3AF;
+      padding: 3px;
+    }
+
+    .masthead-title-col h1 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.15;
+    }
+
+    .masthead-subtitle {
+      margin: 3px 0 0 0;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      color: #1D3559;
+    }
+
+    .masthead-banner.scriptorium-mode .masthead-subtitle {
+      color: #D1D5DB;
+    }
+
+    .masthead-status-box {
+      background-color: var(--bg-tab-inactive);
+      border: 1px solid var(--border-reddit-banner);
+      padding: 5px 9px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    .masthead-banner.scriptorium-mode .masthead-status-box {
+      background-color: #111827;
+      border-color: #4B5563;
+      color: #E5E7EB;
+    }
+
+    /* Classic Old-Reddit Tab Menu */
+    .reddit-tabmenu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .reddit-tabmenu li button {
+      background-color: var(--bg-tab-inactive);
+      border: 1px solid var(--border-reddit-banner);
+      border-bottom: none;
+      padding: 3px 9px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--link-navy);
+      cursor: pointer;
+      display: block;
+    }
+
+    .reddit-tabmenu li button:hover {
+      background-color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    .reddit-tabmenu li button.selected {
+      background-color: #FFFFFF;
+      color: var(--accent-reddit);
+      border-bottom: 1px solid #FFFFFF;
+      margin-bottom: -1px;
+    }
+
+    .masthead-banner.scriptorium-mode .reddit-tabmenu li button {
+      background-color: #374151;
+      border-color: #4B5563;
+      color: #F3F4F6;
+    }
+
+    .masthead-banner.scriptorium-mode .reddit-tabmenu li button.selected {
+      background-color: #FFFFFF;
+      color: #111111;
+      border-bottom: 1px solid #FFFFFF;
+    }
+
+    /* Breadcrumb Strip */
+    .breadcrumb-strip {
+      background-color: var(--bg-row-alt);
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 5px 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* Inline Notification Banner (No alert() or confirm()) */
+    .inline-notice {
+      display: none;
+      background-color: #FFFBE6;
+      border-bottom: 1px solid #D4C27A;
+      padding: 6px 14px;
+      font-size: 11px;
+      color: #2E2500;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .inline-notice.visible {
+      display: flex;
+    }
+
+    /* ==========================================================================
+       3. TWO-COLUMN RETRO FORUM LAYOUT (Fluid Left + 300px Right Sidebar)
+       ========================================================================== */
+    .page-shell {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 12px 14px 36px 14px;
+    }
+
+    .forum-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* XenForo / vBulletin Category Blocks (#2B4C7E Header Bars) */
+    .xen-block {
+      border: 1px solid var(--border-hairline);
+      background-color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+
+    .xen-bar {
+      background-color: var(--bg-xen-header);
+      border-bottom: 1px solid var(--border-xen-header);
+      color: #FFFFFF;
+      padding: 6px 10px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .xen-bar-sub {
+      font-weight: normal;
+      font-size: 10px;
+      color: #D2E3F8;
+      text-transform: none;
+    }
+
+    .xen-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .xen-table th {
+      background-color: #EAEEF3;
+      color: #2B4C7E;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--border-hairline);
+      white-space: nowrap;
+    }
+
+    .xen-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--border-hairline);
+      vertical-align: top;
+    }
+
+    .xen-table tbody tr:nth-child(even) {
+      background-color: var(--bg-row-alt);
+    }
+
+    .xen-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Rectangular Bounty Progress Bar */
+    .progress-track {
+      width: 120px;
+      height: 11px;
+      border: 1px solid #76889C;
+      background-color: #FFFFFF;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: #2B4C7E;
+    }
+
+    .progress-fill.high {
+      background-color: var(--accent-green);
+    }
+
+    /* Square Forum Prefix Tags ([MON], [TRN], [PRT], [CRT]) */
+    .prefix-badge {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: bold;
+      padding: 1px 4px;
+      border: 1px solid #8C9BA5;
+      background-color: #EFF7FF;
+      color: #1D3559;
+      margin-right: 4px;
+      vertical-align: middle;
+      text-transform: uppercase;
+    }
+
+    .prefix-badge.trn {
+      background-color: #EDF7ED;
+      border-color: #6B9E6B;
+      color: #1A4D1A;
+    }
+
+    .prefix-badge.mon {
+      background-color: #EDF2FA;
+      border-color: #5C80B8;
+      color: #1D3559;
+    }
+
+    .prefix-badge.prt {
+      background-color: #FDF4E7;
+      border-color: #C28A42;
+      color: #663B06;
+    }
+
+    .prefix-badge.crt {
+      background-color: #FBEAEA;
+      border-color: #B56969;
+      color: #6B1818;
+    }
+
+    /* Discipline Badge */
+    .disc-flair {
+      display: inline-block;
+      font-size: 10px;
+      padding: 0px 4px;
+      border: 1px solid #C8C8C8;
+      background-color: #F4F4F4;
+      color: #333333;
+      margin-left: 3px;
+      cursor: pointer;
+    }
+
+    .disc-flair:hover {
+      border-color: #2B4C7E;
+      color: #2B4C7E;
+    }
+
+    /* Filter Bar & Old-Reddit Dense Publication Index */
+    .filter-strip {
+      background-color: var(--bg-row-alt);
+      border: 1px solid var(--border-hairline);
+      padding: 6px 8px;
+      margin-bottom: 10px;
+      font-size: 11px;
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .filter-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-label {
+      font-weight: bold;
+      color: var(--text-muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      min-width: 104px;
+    }
+
+    .filter-btn {
+      background-color: #FFFFFF;
+      border: 1px solid #C5C5C5;
+      padding: 2px 6px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      color: var(--link-navy);
+      cursor: pointer;
+    }
+
+    .filter-btn:hover {
+      border-color: #2B4C7E;
+      text-decoration: underline;
+    }
+
+    .filter-btn.active {
+      background-color: #2B4C7E;
+      border-color: #1D3559;
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+
+    .reddit-index-list {
+      border: 1px solid var(--border-hairline);
+    }
+
+    .reddit-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 8px;
+      border-bottom: 1px solid var(--border-hairline);
+      background-color: #FFFFFF;
+    }
+
+    .reddit-row:nth-child(even) {
+      background-color: var(--bg-row-alt);
+    }
+
+    .reddit-row:last-child {
+      border-bottom: none;
+    }
+
+    .row-rank {
+      width: 22px;
+      text-align: right;
+      color: #777777;
+      font-size: 12px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .row-stat-col {
+      width: 58px;
+      text-align: center;
+      flex-shrink: 0;
+      border: 1px solid var(--border-hairline);
+      background-color: #FFFFFF;
+      padding: 2px 3px;
+    }
+
+    .row-notes-num {
+      display: block;
+      font-weight: bold;
+      font-size: 12px;
+      color: #2B4C7E;
+    }
+
+    .row-cc-badge {
+      display: block;
+      font-size: 9px;
+      color: #1A7F37;
+      border-top: 1px solid #EAEEF3;
+      margin-top: 1px;
+      padding-top: 1px;
+    }
+
+    .row-body-col {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .row-title-line {
+      font-size: 14px;
+      line-height: 1.35;
+      margin-bottom: 3px;
+    }
+
+    .paper-title-link {
+      font-family: var(--font-serif);
+      font-size: 15.5px;
+      font-weight: bold;
+      color: var(--link-unvisited);
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .paper-title-link:hover {
+      text-decoration: underline;
+    }
+
+    .paper-title-link.visited {
+      color: var(--link-visited);
+    }
+
+    .expando-toggle {
+      display: inline-block;
+      width: 22px;
+      height: 18px;
+      line-height: 15px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: bold;
+      border: 1px solid #8C9BA5;
+      background-color: #EFF7FF;
+      color: #2B4C7E;
+      cursor: pointer;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    .expando-toggle:hover {
+      background-color: #CEE3F8;
+      color: #111111;
+    }
+
+    .row-meta-subline {
+      font-size: 11px;
+      color: var(--text-subtle);
+    }
+
+    .row-action-links {
+      margin-top: 3px;
+      font-size: 11px;
+      font-weight: bold;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .row-action-links button {
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: bold;
+      color: #555555;
+      cursor: pointer;
+    }
+
+    .row-action-links button:hover {
+      text-decoration: underline;
+      color: var(--link-unvisited);
+    }
+
+    /* Inline Abstract & BibTeX Expando Box */
+    .inline-expando-box {
+      display: none;
+      margin-top: 7px;
+      padding: 8px 10px;
+      border: 1px solid #8C9BA5;
+      background-color: #FFFFFF;
+      font-size: 12px;
+      max-width: 780px;
+    }
+
+    .inline-expando-box.open {
+      display: block;
+    }
+
+    .bibtex-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background-color: var(--bg-row-alt);
+      border: 1px solid var(--border-hairline);
+      padding: 6px 8px;
+      margin: 6px 0;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    /* ==========================================================================
+       RIGHT SIDEBAR (300px Old-Reddit + XenForo Widgets)
+       ========================================================================== */
+    .right-sidebar {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .side-widget {
+      border: 1px solid var(--border-hairline);
+      background-color: #FFFFFF;
+    }
+
+    .side-widget-bar {
+      background-color: var(--bg-xen-header);
+      border-bottom: 1px solid var(--border-xen-header);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 5px 8px;
+    }
+
+    .side-widget-body {
+      padding: 9px 10px;
+      font-size: 11px;
+    }
+
+    .sidebar-seal-frame {
+      width: 115px;
+      height: 115px;
+      margin: 2px auto 8px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-hairline);
+      padding: 2px;
+      background-color: #FFFFFF;
+    }
+
+    .retro-input, .retro-select, .retro-textarea {
+      border: 1px solid var(--border-control);
+      background-color: #FFFFFF;
+      color: #111111;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      padding: 4px 6px;
+      width: 100%;
+    }
+
+    .retro-input:focus, .retro-select:focus, .retro-textarea:focus {
+      outline: 1px solid var(--bg-xen-header);
+    }
+
+    .retro-btn {
+      border: 1px solid #5F99CF;
+      background-color: #CEE3F8;
+      color: #1D3559;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: bold;
+      padding: 4px 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .retro-btn:hover {
+      background-color: #B4D4F4;
+    }
+
+    .retro-btn.navy {
+      background-color: var(--bg-xen-header);
+      border-color: var(--border-xen-header);
+      color: #FFFFFF;
+    }
+
+    .retro-btn.navy:hover {
+      background-color: #1D3559;
+    }
+
+    .retro-btn.neutral {
+      background-color: #F0F3F5;
+      border-color: #AAAAAA;
+      color: #222222;
+    }
+
+    .retro-btn.neutral:hover {
+      background-color: #E2E6EA;
+    }
+
+    .stat-pair {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      border-bottom: 1px dotted var(--border-hairline);
+    }
+
+    .stat-pair:last-child {
+      border-bottom: none;
+    }
+
+    .concordance-item {
+      padding: 4px 0;
+      border-bottom: 1px dotted var(--border-hairline);
+    }
+
+    .concordance-item:last-child {
+      border-bottom: none;
+    }
+
+    /* ==========================================================================
+       4. THREAD & PAPER READING VIEW (XENFORO POSTBITS)
+       ========================================================================== */
+    .thread-header-box {
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-row-alt);
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .thread-header-box h2 {
+      margin: 4px 0 3px 0;
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: bold;
+      color: #111111;
+    }
+
+    .typst-inline-panel {
+      display: none;
+      border: 2px solid #111111;
+      background-color: #FFFFFF;
+      padding: 20px 26px;
+      margin-bottom: 14px;
+    }
+
+    .typst-inline-panel.open {
+      display: block;
+    }
+
+    .xen-postbit-row {
+      display: grid;
+      grid-template-columns: 175px minmax(0, 1fr);
+      border: 1px solid var(--border-hairline);
+      margin-bottom: 12px;
+      background-color: #FFFFFF;
+    }
+
+    .postbit-left {
+      background-color: var(--bg-row-alt);
+      border-right: 1px solid var(--border-hairline);
+      padding: 10px;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .postbit-author-name {
+      display: block;
+      font-weight: bold;
+      font-size: 12px;
+      color: var(--link-navy);
+      margin-bottom: 4px;
+    }
+
+    .fellow-rank-strip {
+      display: block;
+      background-color: var(--bg-xen-header);
+      border: 1px solid var(--border-xen-header);
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 2px 4px;
+      margin-bottom: 7px;
+    }
+
+    .fellow-rank-strip.trn {
+      background-color: #1A4D1A;
+      border-color: #113611;
+    }
+
+    .fellow-rank-strip.math {
+      background-color: #46297A;
+      border-color: #2E1952;
+    }
+
+    .fellow-rank-strip.contrib {
+      background-color: #555555;
+      border-color: #333333;
+    }
+
+    .postbit-seal-avatar {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 7px auto;
+      border: 1px solid var(--border-hairline);
+      background-color: #FFFFFF;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .postbit-meta-list {
+      text-align: left;
+      border-top: 1px solid var(--border-hairline);
+      padding-top: 6px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .postbit-meta-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    .postbit-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: #FFFFFF;
+    }
+
+    .postbit-top-bar {
+      background-color: #F9FAFB;
+      border-bottom: 1px solid #E5E7EB;
+      padding: 4px 12px;
+      font-size: 10px;
+      color: var(--text-subtle);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .postbit-content-area {
+      padding: 14px 16px;
+    }
+
+    .paper-sidenote-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 235px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .georgia-prose {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      line-height: 1.62;
+      color: #111111;
+      max-width: 66ch;
+    }
+
+    .georgia-prose h3 {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      font-weight: bold;
+      border-bottom: 1px solid var(--border-hairline);
+      padding-bottom: 3px;
+      margin: 16px 0 8px 0;
+    }
+
+    .georgia-prose p {
+      margin: 0 0 12px 0;
+    }
+
+    .sn-ref {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: bold;
+      color: var(--accent-reddit);
+      vertical-align: super;
+      padding: 0 2px;
+    }
+
+    .equation-box {
+      background-color: var(--bg-row-alt);
+      border: 1px solid var(--border-hairline);
+      padding: 8px 12px;
+      margin: 12px 0;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      overflow-x: auto;
+    }
+
+    .tufte-margin-box {
+      background-color: var(--bg-row-alt);
+      border: 1px solid var(--border-hairline);
+      padding: 8px 10px;
+      font-family: var(--font-serif);
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: #222222;
+    }
+
+    .tufte-margin-head {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #2B4C7E;
+      border-bottom: 1px solid var(--border-hairline);
+      padding-bottom: 3px;
+      margin-bottom: 7px;
+    }
+
+    .tufte-note-item {
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px dotted #C8C8C8;
+    }
+
+    .tufte-note-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .bb-quote {
+      background-color: var(--bg-row-alt);
+      border: 1px solid var(--border-hairline);
+      border-left: 3px solid var(--bg-xen-header);
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    .bb-quote-head {
+      background-color: #EAEEF3;
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: bold;
+      color: #2B4C7E;
+    }
+
+    .bb-quote-body {
+      padding: 6px 9px;
+      font-style: italic;
+      color: #333333;
+    }
+
+    .postbit-sig {
+      margin-top: 14px;
+      padding-top: 6px;
+      border-top: 1px dashed #CCCCCC;
+      font-size: 10px;
+      color: #666666;
+    }
+
+    .postbit-footer-bar {
+      background-color: #FAFAFA;
+      border-top: 1px solid #EEEEEE;
+      padding: 4px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+
+    .bb-toolbar {
+      background-color: #EAEEF3;
+      border: 1px solid var(--border-control);
+      border-bottom: none;
+      padding: 4px 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .bb-tool-btn {
+      background-color: #FFFFFF;
+      border: 1px solid var(--border-control);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 7px;
+      cursor: pointer;
+    }
+
+    .bb-tool-btn:hover {
+      background-color: #CEE3F8;
+    }
+
+    /* ==========================================================================
+       5. CHARTER & COLOPHON VIEW (240px x 240px Full-Color Seal Frontispiece)
+       ========================================================================== */
+    .charter-box {
+      border: 1px solid var(--border-hairline);
+      background-color: #FFFFFF;
+      padding: 22px 26px;
+    }
+
+    .charter-seal-hero {
+      text-align: center;
+      border-bottom: 2px solid var(--bg-xen-header);
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+    }
+
+    .charter-seal-hero img {
+      margin: 0 auto;
+      border: 1px solid var(--border-hairline);
+      padding: 4px;
+      background-color: #FFFFFF;
+    }
+
+    .charter-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      font-family: var(--font-serif);
+      font-size: 15.5px;
+      line-height: 1.62;
+    }
+
+    .charter-two-col h3 {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      text-transform: uppercase;
+      background-color: var(--bg-xen-header);
+      color: #FFFFFF;
+      padding: 5px 8px;
+      margin-top: 0;
+    }
+
+    /* ==========================================================================
+       6. THE SCRIPTORIUM (PRIVATE FELLOWS WORKSPACE)
+       ========================================================================== */
+    .scrip-subnav {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--bg-xen-header);
+      margin-bottom: 12px;
+      gap: 3px;
+    }
+
+    .scrip-tab {
+      background-color: #EFF7FF;
+      border: 1px solid var(--border-control);
+      border-bottom: none;
+      padding: 6px 12px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: bold;
+      color: #2B4C7E;
+      cursor: pointer;
+    }
+
+    .scrip-tab.active {
+      background-color: var(--bg-xen-header);
+      border-color: var(--border-xen-header);
+      color: #FFFFFF;
+    }
+
+    .wire-log-box {
+      border: 1px solid var(--border-hairline);
+      background-color: #FFFFFF;
+      max-height: 380px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .wire-entry {
+      display: grid;
+      grid-template-columns: 110px 135px 115px 1fr;
+      gap: 8px;
+      padding: 6px 8px;
+      border-bottom: 1px solid #EAEEF3;
+      font-size: 12px;
+      align-items: baseline;
+    }
+
+    .wire-entry:nth-child(even) {
+      background-color: var(--bg-row-alt);
+    }
+
+    .board-footer {
+      border-top: 1px solid var(--border-hairline);
+      background-color: var(--bg-utility);
+      padding: 10px 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    @media (max-width: 940px) {
+      .forum-two-col {
+        grid-template-columns: 1fr;
+      }
+      .right-sidebar {
+        width: 100%;
+      }
+      .paper-sidenote-layout,
+      .charter-two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .xen-postbit-row {
+        grid-template-columns: 1fr;
+      }
+      .postbit-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border-hairline);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+        gap: 8px;
+      }
+      .postbit-seal-avatar {
+        margin: 0;
+        width: 44px;
+        height: 44px;
+      }
+      .postbit-meta-list {
+        border-top: none;
+        padding-top: 0;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .wire-entry {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden file input so user can optionally load their exact local PNG seal -->
+  <input type="file" id="seal-file-input" accept="image/*" style="display: none;" onchange="handleSealUpload(event)" />
+
+  <!-- ========================================================================
+       1. TOP UTILITY BAR (#F0F3F5, 11px Verdana/Tahoma)
+       ======================================================================== -->
+  <div class="top-utility-strip">
+    <div class="utility-nav-left">
+      <button type="button" class="util-btn active" data-board="ALL" onclick="selectArtifactBoard('ALL')">ALL</button>
+      <span>-</span>
+      <button type="button" class="util-btn" data-board="TRN" onclick="selectArtifactBoard('TRN')">TRANSLATIONS [TRN]</button>
+      <span>-</span>
+      <button type="button" class="util-btn" data-board="MON" onclick="selectArtifactBoard('MON')">MONOGRAPHS [MON]</button>
+      <span>-</span>
+      <button type="button" class="util-btn" data-board="PRT" onclick="selectArtifactBoard('PRT')">PROTOCOLS [PRT]</button>
+      <span>-</span>
+      <button type="button" class="util-btn" data-board="CRT" onclick="selectArtifactBoard('CRT')">CRITIQUES [CRT]</button>
+      <span>-</span>
+      <button type="button" class="util-btn" onclick="scrollToBounties()">BOUNTIES</button>
+      <span>-</span>
+      <button type="button" class="util-btn" data-board="CHARTER" onclick="switchView('charter')">CHARTER &amp; COLOPHON</button>
+    </div>
+
+    <div class="utility-nav-right">
+      <div class="seal-control-group" role="group" aria-label="Seal Ink Toggle">
+        <span>SEAL:</span>
+        <button type="button" id="ink-btn-color" class="ink-opt-btn active" onclick="setSealInkMode('color')">[FULL COLOR</button>
+        <span>|</span>
+        <button type="button" id="ink-btn-woodcut" class="ink-opt-btn" onclick="setSealInkMode('woodcut')">WOODCUT MONOCHROME]</button>
+      </div>
+      <button type="button" class="upload-seal-btn" onclick="document.getElementById('seal-file-input').click()" title="Replace embedded seal with your local PNG file">
+        [Upload Your Seal PNG]
+      </button>
+      <button type="button" id="top-scriptorium-btn" class="scriptorium-toggle-btn" onclick="toggleScriptorium()">
+        FELLOWS: [ENTER SCRIPTORIUM]
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. MAIN MASTHEAD BANNER (#CEE3F8 Old-Reddit / #1F2937 Scriptorium)
+       ======================================================================== -->
+  <header id="main-masthead" class="masthead-banner">
+    <div class="masthead-inner-top">
+      <div class="masthead-brand">
+        <div class="masthead-seal-wrap" onclick="document.getElementById('seal-file-input').click()" title="Blake College Press Seal (Click to load custom PNG)">
+          <img
+            id="masthead-seal-img"
+            class="bcp-seal-img toggleable-seal"
+            src=""
+            alt="Blake College Press Seal"
+            width="76"
+            height="76"
+          />
+        </div>
+        <div class="masthead-title-col">
+          <h1 id="masthead-heading">BLAKE COLLEGE PRESS</h1>
+          <p id="masthead-sub" class="masthead-subtitle">
+            An Independent Interdisciplinary Research Guild &amp; Open-Access Publishing House
+          </p>
+        </div>
+      </div>
+
+      <div class="masthead-status-box" id="masthead-right-status">
+        <div><strong>Open Commons</strong> | License: <span class="mono">CC-BY-4.0</span> | Archive: <span class="mono">Zenodo DOI</span></div>
+        <div style="margin-top: 2px;">
+          Physiology &middot; Philosophy &middot; Mathematics &middot; Poetics &middot; Ecology &middot;
+          <button type="button" class="forum-link" onclick="toggleScriptorium()">[Enter Scriptorium]</button>
+        </div>
+      </div>
+    </div>
+
+    <ul class="reddit-tabmenu" id="reddit-tabmenu">
+      <li><button type="button" class="selected" data-tab="ALL" onclick="selectArtifactBoard('ALL')">board index</button></li>
+      <li><button type="button" data-tab="TRN" onclick="selectArtifactBoard('TRN')">translations [trn]</button></li>
+      <li><button type="button" data-tab="MON" onclick="selectArtifactBoard('MON')">monographs [mon]</button></li>
+      <li><button type="button" data-tab="PRT" onclick="selectArtifactBoard('PRT')">protocols [prt]</button></li>
+      <li><button type="button" data-tab="CRT" onclick="selectArtifactBoard('CRT')">critiques [crt]</button></li>
+      <li><button type="button" data-tab="BOUNTIES" onclick="scrollToBounties()">bounties</button></li>
+      <li><button type="button" data-tab="CHARTER" onclick="switchView('charter')">charter &amp; colophon</button></li>
+    </ul>
+  </header>
+
+  <!-- Breadcrumb Strip -->
+  <nav class="breadcrumb-strip" aria-label="Breadcrumb">
+    <div id="breadcrumb-path">
+      <button type="button" class="forum-link" onclick="selectArtifactBoard('ALL')">Blake College Press</button>
+      <span>&rsaquo;</span>
+      <strong>Forum Index &amp; Master Catalog</strong>
+    </div>
+    <div class="mono" style="color: #555555;">EST. MEXICO 1962 / EUGENE 1966 &middot; &ldquo;TEACHING HOW TO INVENT KNOWLEDGE AND SOLVE PROBLEMS&rdquo;</div>
+  </nav>
+
+  <!-- Inline Notification Bar -->
+  <div id="inline-notice" class="inline-notice" role="status">
+    <span id="inline-notice-text"></span>
+    <button type="button" class="forum-link mono" onclick="dismissNotice()">[dismiss]</button>
+  </div>
+
+  <!-- ========================================================================
+       MAIN PAGE CONTAINER
+       ======================================================================== -->
+  <div class="page-shell">
+
+    <!-- ======================================================================
+         VIEW 1: FORUM INDEX & MASTER CATALOG (Home)
+         ====================================================================== -->
+    <div id="view-index" class="forum-two-col">
+      <main>
+        <!-- A. PINNED: ACTIVE TRANSLATION & REPLICATION BOUNTIES -->
+        <section class="xen-block" id="pinned-bounties-block" aria-label="Pinned Active Translation and Replication Bounties">
+          <div class="xen-bar">
+            <span>PINNED: ACTIVE TRANSLATION &amp; REPLICATION BOUNTIES</span>
+            <span class="xen-bar-sub">Open Collective Crowdfunded Licensing, Translation &amp; Empirical Replication</span>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="xen-table">
+              <thead>
+                <tr>
+                  <th style="width: 72px;">PREFIX</th>
+                  <th>BOUNTY / ARCHIVAL RECOVERY TARGET</th>
+                  <th style="width: 245px;">FUNDING PROGRESS</th>
+                  <th style="width: 115px;">CONTRIBUTE</th>
+                </tr>
+              </thead>
+              <tbody id="bounties-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- B. MASTER CATALOG — CO-EQUAL OUTPUT ARTIFACTS -->
+        <section class="xen-block" aria-label="Master Catalog Co-Equal Output Artifacts">
+          <div class="xen-bar">
+            <span>MASTER CATALOG &mdash; CO-EQUAL OUTPUT ARTIFACTS</span>
+            <span class="xen-bar-sub" id="index-count-label">Showing 6 of 6 publications</span>
+          </div>
+
+          <div style="padding: 8px;">
+            <div class="filter-strip">
+              <div class="filter-row">
+                <span class="filter-label">Output Artifact:</span>
+                <button type="button" class="filter-btn active" data-art="ALL" onclick="selectArtifactBoard('ALL')">[ALL]</button>
+                <button type="button" class="filter-btn" data-art="TRN" onclick="selectArtifactBoard('TRN')">[TRN] Translations</button>
+                <button type="button" class="filter-btn" data-art="MON" onclick="selectArtifactBoard('MON')">[MON] Monographs</button>
+                <button type="button" class="filter-btn" data-art="PRT" onclick="selectArtifactBoard('PRT')">[PRT] Protocols</button>
+                <button type="button" class="filter-btn" data-art="CRT" onclick="selectArtifactBoard('CRT')">[CRT] Critiques</button>
+              </div>
+              <div class="filter-row">
+                <span class="filter-label">Disciplines:</span>
+                <button type="button" class="filter-btn active" data-disc="ALL" onclick="selectDiscipline('ALL')">[All Disciplines]</button>
+                <button type="button" class="filter-btn" data-disc="Physiology" onclick="selectDiscipline('Physiology')">[Physiology]</button>
+                <button type="button" class="filter-btn" data-disc="Mathematics" onclick="selectDiscipline('Mathematics')">[Mathematics]</button>
+                <button type="button" class="filter-btn" data-disc="Philosophy" onclick="selectDiscipline('Philosophy')">[Philosophy]</button>
+                <button type="button" class="filter-btn" data-disc="Poetics" onclick="selectDiscipline('Poetics')">[Poetics]</button>
+                <button type="button" class="filter-btn" data-disc="Ecology" onclick="selectDiscipline('Ecology')">[Ecology]</button>
+              </div>
+              <div id="search-status-row" style="display: none; margin-top: 5px; padding-top: 4px; border-top: 1px solid #D8DFE6; font-size: 11px;">
+                Filtering by Concordance / Search Term: <strong id="search-term-display"></strong>
+                <button type="button" class="forum-link" style="margin-left: 8px;" onclick="clearCatalogSearch()">[reset filter]</button>
+              </div>
+            </div>
+
+            <div class="reddit-index-list" id="publication-index-list"></div>
+          </div>
+        </section>
+      </main>
+
+      <!-- RIGHT SIDEBAR (300px) -->
+      <aside class="right-sidebar" aria-label="Forum Sidebar">
+        <!-- 1. About Blake College Press -->
+        <div class="side-widget">
+          <div class="side-widget-bar">ABOUT BLAKE COLLEGE PRESS</div>
+          <div class="side-widget-body">
+            <div class="sidebar-seal-frame">
+              <img
+                class="bcp-seal-img toggleable-seal"
+                src=""
+                alt="Blake College Press Seal"
+                width="109"
+                height="109"
+              />
+            </div>
+
+            <p style="margin: 0 0 8px 0; color: #222222;">
+              An independent interdisciplinary research guild and open-access publishing house uniting <strong>Physiology, Philosophy, Mathematics, Poetics &amp; Language, and Ecology</strong>&mdash;continuing William Blake&rsquo;s illuminated printing and Ray Peat&rsquo;s 1962/1966 Blake College motto: <em>&ldquo;teaching how to invent knowledge and solve problems.&rdquo;</em>
+            </p>
+
+            <div style="border-top: 1px solid #D8DFE6; border-bottom: 1px solid #D8DFE6; padding: 5px 0; margin-bottom: 8px;">
+              <div class="stat-pair"><span>Published Works:</span><strong class="mono">6 (CC-BY-4.0)</strong></div>
+              <div class="stat-pair"><span>Approved Fellows:</span><strong class="mono">42 (7 online)</strong></div>
+              <div class="stat-pair"><span>Total Thread Notes:</span><strong class="mono" id="sidebar-notes-total">214</strong></div>
+              <div class="stat-pair"><span>Bounties Funded:</span><strong class="mono" id="sidebar-bounty-total">$3,440</strong></div>
+            </div>
+
+            <div style="background-color: #F6F8FA; border: 1px solid #D8DFE6; padding: 5px 7px; font-size: 10px; color: #444444;">
+              <strong>Charter Notice:</strong> Blake College Press is an independent research guild and open-access publishing house; it does not grant state-accredited academic degrees.
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Fellows Login / Scriptorium Box -->
+        <div class="side-widget">
+          <div class="side-widget-bar">FELLOWS LOGIN / SCRIPTORIUM</div>
+          <div class="side-widget-body">
+            <form onsubmit="handleFellowLogin(event)">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 6px;">
+                <input type="text" id="login-handle" class="retro-input" placeholder="fellow handle" value="@fellow.guest" required />
+                <input type="password" id="login-key" class="retro-input" placeholder="invite key" value="blake1966" required />
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label style="font-size: 10px; color: #555555;">
+                  <input type="checkbox" checked /> remember session
+                </label>
+                <button type="submit" class="retro-btn">enter scriptorium</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- 3. Master Concordance & Index -->
+        <div class="side-widget">
+          <div class="side-widget-bar">MASTER CONCORDANCE &amp; INDEX</div>
+          <div class="side-widget-body">
+            <form onsubmit="handleSidebarSearch(event)" style="display: flex; gap: 4px; margin-bottom: 8px;">
+              <input type="text" id="concordance-search-input" class="retro-input" placeholder="search catalog or author..." />
+              <button type="submit" class="retro-btn">find</button>
+            </form>
+
+            <div class="concordance-item">
+              <button type="button" class="forum-link mono" style="font-weight: bold;" onclick="openPaperThread('BCP-TRN-001')">BCP-TRN-001</button>
+              &harr;
+              <button type="button" class="forum-link mono" style="font-weight: bold;" onclick="openPaperThread('BCP-MON-001')">BCP-MON-001</button>
+              <div style="color: #555555;">Nasonov sorption theory &rarr; Ling multilayer water</div>
+            </div>
+            <div class="concordance-item">
+              <button type="button" class="forum-link mono" style="font-weight: bold;" onclick="openPaperThread('BCP-MON-002')">BCP-MON-002</button>
+              &harr;
+              <button type="button" class="forum-link mono" style="font-weight: bold;" onclick="openPaperThread('BCP-CRT-001')">BCP-CRT-001</button>
+              <div style="color: #555555;">Relational topology &amp; non-ergodic biological modeling</div>
+            </div>
+            <div class="concordance-item">
+              <button type="button" class="forum-link mono" style="font-weight: bold;" onclick="openPaperThread('BCP-PRT-001')">BCP-PRT-001</button>
+              &harr;
+              <button type="button" class="forum-link mono" style="font-weight: bold;" onclick="openPaperThread('BCP-TRN-002')">BCP-TRN-002</button>
+              <div style="color: #555555;">Differential respirometry, soil-light ecology &amp; Blakean perception</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ======================================================================
+         VIEW 2: XENFORO POSTBIT THREAD & PAPER READING VIEW
+         ====================================================================== -->
+    <section id="view-thread" style="display: none;" aria-label="Paper Thread View">
+      <div class="thread-header-box">
+        <div>
+          <div id="thread-header-tags"></div>
+          <h2 id="thread-header-title">Paper Title</h2>
+          <div class="mono" id="thread-header-meta" style="color: #555555;"></div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <button type="button" class="retro-btn neutral" onclick="switchView('index')">&larr; Back to Forum Index</button>
+          <button type="button" id="toggle-specimen-btn" class="retro-btn navy" onclick="toggleTypstSpecimen()">
+            [Print / Typeset PDF Specimen]
+          </button>
+        </div>
+      </div>
+
+      <!-- Toggleable Printable Typst PDF Specimen -->
+      <div id="typst-specimen-panel" class="typst-inline-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #D8DFE6; padding-bottom: 6px; margin-bottom: 14px;">
+          <span class="mono" style="font-weight: bold;">TYPST TYPESET ARCHIVAL MONOGRAPH SPECIMEN &middot; WOODCUT IMPRINT</span>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="retro-btn neutral" onclick="window.print()">Print Page</button>
+            <button type="button" class="retro-btn" onclick="toggleTypstSpecimen()">Hide Specimen</button>
+          </div>
+        </div>
+        <div id="typst-specimen-content"></div>
+      </div>
+
+      <!-- Chronological Postbit Stream -->
+      <div id="thread-postbits-container"></div>
+
+      <!-- Quick Reply Composer -->
+      <div class="xen-block" id="thread-reply-box">
+        <div class="xen-bar">
+          <span>QUICK REPLY &mdash; THREADED CORRESPONDENCE &amp; MARGINALIA</span>
+          <span class="xen-bar-sub">Strict Chronological Archive</span>
+        </div>
+        <form style="padding: 10px;" onsubmit="submitThreadReply(event)">
+          <div style="display: grid; grid-template-columns: 200px 220px 1fr; gap: 6px; margin-bottom: 6px;">
+            <input type="text" id="reply-author-input" class="retro-input" placeholder="Your Handle (e.g. D. Lindqvist)" required />
+            <select id="reply-rank-input" class="retro-select">
+              <option value="Contributor">Contributor</option>
+              <option value="Guild Fellow • Physiology">Guild Fellow &bull; Physiology</option>
+              <option value="Guild Fellow • Mathematics">Guild Fellow &bull; Mathematics</option>
+              <option value="Guild Fellow • Philosophy">Guild Fellow &bull; Philosophy</option>
+              <option value="Guild Fellow • Poetics">Guild Fellow &bull; Poetics</option>
+              <option value="Guild Fellow • Ecology">Guild Fellow &bull; Ecology</option>
+            </select>
+            <input type="text" id="reply-ref-input" class="retro-input" placeholder="Section anchor (e.g. Re: § 2 Eq. 2.1)" />
+          </div>
+
+          <div class="bb-toolbar">
+            <button type="button" class="bb-tool-btn" onclick="wrapReplyBB('[B]', '[/B]')">[B]</button>
+            <button type="button" class="bb-tool-btn" onclick="wrapReplyBB('[I]', '[/I]')">[I]</button>
+            <button type="button" class="bb-tool-btn" onclick="wrapReplyBB('[QUOTE]', '[/QUOTE]')">[QUOTE]</button>
+            <button type="button" class="bb-tool-btn" onclick="wrapReplyBB('[TEX] ', ' [/TEX]')">[TEX]</button>
+          </div>
+          <textarea id="reply-text-input" class="retro-textarea" rows="5" placeholder="Compose your scholarly response, mathematical proof note, or primary-source citation..." required></textarea>
+
+          <div style="margin-top: 7px; display: flex; gap: 6px;">
+            <button type="submit" class="retro-btn navy">Post Reply</button>
+            <button type="button" class="retro-btn neutral" onclick="document.getElementById('reply-text-input').value = ''">Clear</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 3: CHARTER & COLOPHON VIEW (240px x 240px Full-Color Seal)
+         ====================================================================== -->
+    <section id="view-charter" style="display: none;" aria-label="Charter and Colophon">
+      <div class="charter-box">
+        <div class="charter-seal-hero">
+          <img
+            class="bcp-seal-img"
+            src=""
+            alt="Blake College Press Seal"
+            width="240"
+            height="240"
+          />
+          <div class="mono" style="margin-top: 8px; color: #444444;">
+            OFFICIAL IMPRINT SEAL OF BLAKE COLLEGE PRESS &mdash; ADAPTED FROM WILLIAM BLAKE&rsquo;S ILLUMINATED SOLAR PLATES
+          </div>
+        </div>
+
+        <div class="charter-two-col">
+          <div>
+            <h3>I. Historical Lineage: William Blake &rarr; Ray Peat (1962 / 1966)</h3>
+            <p>
+              <strong>Blake College Press</strong> revives the anti-dogmatic educational and publishing lineage of poet-engraver <strong>William Blake</strong> (1757&ndash;1827) and biologist-educator <strong>Ray Peat</strong> (1936&ndash;2022). Disillusioned with compartmentalized, credential-driven academic bureaucracy, Peat founded the original <em>Blake College</em> in Mexico City in 1962 (relocating to Valle de Bravo) and reopened it in a Victorian house near Skinner&rsquo;s Butte in Eugene, Oregon in 1966.
+            </p>
+            <p>
+              Modeled on Blake&rsquo;s illuminated printing and England&rsquo;s &ldquo;free scholars&rdquo; tradition, Blake College rejected rigid departmental silos to unite <strong>Physiology, Philosophy, Mathematics, Poetics &amp; Language, and Ecology</strong> under a single motto: <em>&ldquo;teaching how to invent knowledge and solve problems.&rdquo;</em>
+            </p>
+          </div>
+
+          <div>
+            <h3>II. Four Output Artifacts, CC-BY-4.0 &amp; Non-Degree Charter</h3>
+            <p>
+              To prevent any single academic discipline from dominating the press, all work is indexed across four co-equal <strong>Output Artifacts</strong>: <em>Translations &amp; Editions</em> (<code>[TRN]</code>), <em>Treatises &amp; Monographs</em> (<code>[MON]</code>), <em>Replications &amp; Protocols</em> (<code>[PRT]</code>), and <em>Critiques &amp; Marginalia</em> (<code>[CRT]</code>). Every release is published free of paywalls under <strong>Creative Commons Attribution (CC-BY-4.0)</strong> licensing with a permanent <strong>Zenodo DOI</strong>.
+            </p>
+            <p>
+              <strong>Legal &amp; Institutional Disclaimer:</strong> Blake College Press is an independent interdisciplinary research guild and open-access publishing house. It is not a state-accredited college or university and does not grant state-accredited academic degrees.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 4: THE SCRIPTORIUM (PRIVATE FELLOWS WORKSPACE)
+         ====================================================================== -->
+    <section id="view-scriptorium" style="display: none;" aria-label="The Scriptorium Private Fellows Workspace">
+      <div class="scrip-subnav" role="tablist">
+        <button type="button" class="scrip-tab active" data-stab="wire" onclick="switchScriptoriumTab('wire')">
+          1. The Dispatch Wire (Chronological IRC / Mailing Stream)
+        </button>
+        <button type="button" class="scrip-tab" data-stab="desk" onclick="switchScriptoriumTab('desk')">
+          2. The Working Desk (Pre-Print Cross-Discipline Review)
+        </button>
+        <button type="button" class="scrip-tab" data-stab="vault" onclick="switchScriptoriumTab('vault')">
+          3. Resource Vault &amp; Equipment Ledger
+        </button>
+      </div>
+
+      <!-- TAB A: THE DISPATCH WIRE -->
+      <div id="scrip-tab-wire">
+        <div class="filter-strip" style="display: flex; flex-wrap: wrap; align-items: center; gap: 5px;">
+          <strong>STREAM:</strong>
+          <button type="button" class="filter-btn active" data-stream="ALL" onclick="filterWireStream('ALL')">[ALL STREAMS]</button>
+          <button type="button" class="filter-btn" data-stream="#general-inquiry" onclick="filterWireStream('#general-inquiry')">#general-inquiry</button>
+          <button type="button" class="filter-btn" data-stream="#translation-desk" onclick="filterWireStream('#translation-desk')">#translation-desk</button>
+          <button type="button" class="filter-btn" data-stream="#lab-bench" onclick="filterWireStream('#lab-bench')">#lab-bench</button>
+          <button type="button" class="filter-btn" data-stream="#editorial-proofs" onclick="filterWireStream('#editorial-proofs')">#editorial-proofs</button>
+        </div>
+
+        <div class="wire-log-box" id="dispatch-wire-log"></div>
+
+        <form onsubmit="submitWirePost(event)" style="border: 1px solid var(--border-hairline); background-color: var(--bg-row-alt); padding: 8px; display: grid; grid-template-columns: 140px 175px 1fr auto; gap: 6px;">
+          <input type="text" id="wire-handle-input" class="retro-input mono" value="@fellow.guest" required />
+          <select id="wire-stream-select" class="retro-select mono">
+            <option value="#general-inquiry">#general-inquiry</option>
+            <option value="#translation-desk">#translation-desk</option>
+            <option value="#lab-bench">#lab-bench</option>
+            <option value="#editorial-proofs">#editorial-proofs</option>
+          </select>
+          <input type="text" id="wire-msg-input" class="retro-input" placeholder="Transmit wire note (use [[BCP-MON-001]] to auto-link catalog entries)..." required />
+          <button type="submit" class="retro-btn navy">Transmit</button>
+        </form>
+      </div>
+
+      <!-- TAB B: THE WORKING DESK -->
+      <div id="scrip-tab-desk" style="display: none;">
+        <div class="xen-block">
+          <div class="xen-bar">
+            <span>THE WORKING DESK &mdash; PRE-PRINT DRAFTS IN CROSS-DISCIPLINE PEER REVIEW</span>
+            <span class="xen-bar-sub">Two Fellow sign-offs required prior to Typst PDF stamping &amp; Zenodo DOI</span>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="xen-table">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">DRAFT ID</th>
+                  <th style="width: 70px;">TYPE</th>
+                  <th>MANUSCRIPT TITLE &amp; LEAD FELLOW</th>
+                  <th style="width: 155px;">STAGE</th>
+                  <th style="width: 245px;">FELLOW SIGN-OFFS</th>
+                  <th style="width: 165px;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="working-desk-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB C: RESOURCE VAULT & EQUIPMENT LEDGER -->
+      <div id="scrip-tab-vault" style="display: none;">
+        <div class="xen-block">
+          <div class="xen-bar">
+            <span>I. RESOURCE VAULT &mdash; RARE ARCHIVAL SCANS &amp; PAYWALLED JOURNAL REQUESTS</span>
+            <span class="xen-bar-sub">Multi-Disciplinary OCR &amp; Inter-Library Fulfillment</span>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="xen-table">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">VAULT ID</th>
+                  <th>ARCHIVAL CITATION &amp; FILE STATUS</th>
+                  <th style="width: 115px;">REQUESTER</th>
+                  <th style="width: 165px;">STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="vault-table-body"></tbody>
+            </table>
+          </div>
+          <form onsubmit="submitVaultRequest(event)" style="padding: 8px; background-color: var(--bg-row-alt); border-top: 1px solid var(--border-hairline); display: grid; grid-template-columns: 145px 1fr auto; gap: 6px;">
+            <input type="text" id="vault-user-input" class="retro-input mono" value="@fellow.guest" required />
+            <input type="text" id="vault-cite-input" class="retro-input" placeholder="Request rare monograph scan or journal paper (Author, Year, Title)..." required />
+            <button type="submit" class="retro-btn navy">Log Request</button>
+          </form>
+        </div>
+
+        <div class="xen-block">
+          <div class="xen-bar">
+            <span>II. GUILD EQUIPMENT &amp; INSTRUMENTATION LEDGER</span>
+            <span class="xen-bar-sub">Shared Laboratory, Optical &amp; Computational Tools</span>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="xen-table">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">BENCH ID</th>
+                  <th>INSTRUMENTATION &amp; CAPABILITY</th>
+                  <th style="width: 170px;">CUSTODIAN</th>
+                  <th style="width: 145px;">AVAILABILITY</th>
+                  <th style="width: 135px;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="equipment-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="board-footer">
+    <div><strong>Blake College Press</strong> &middot; Interdisciplinary Research Guild &amp; Open-Access Publishing House &middot; CC-BY-4.0</div>
+    <div class="mono">PHYSIOLOGY &middot; PHILOSOPHY &middot; MATHEMATICS &middot; POETICS &middot; ECOLOGY</div>
+  </footer>
+
+  <!-- ========================================================================
+       EMBEDDED CANVAS SEAL GENERATOR & APPLICATION LOGIC
+       ======================================================================== -->
+  <script>
+    /* ========================================================================
+       1. SELF-CONTAINED 600x600 HTML5 CANVAS ARTWORK GENERATOR
+       Renders the circular Blake College Press seal directly into a Data URL
+       so every <img> and favicon works 100% offline with zero broken links.
+       ======================================================================== */
+    function generateBlakeSealDataURL() {
+      const size = 600;
+      const cx = 300;
+      const cy = 300;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      // 1. Warm archival parchment base fill (#F2ECE0)
+      ctx.fillStyle = '#F2ECE0';
+      ctx.fillRect(0, 0, size, size);
+
+      // Subtle deterministic paper grain specks
+      ctx.fillStyle = 'rgba(130, 114, 92, 0.08)';
+      for (let i = 0; i < 420; i++) {
+        const px = (i * 173) % size;
+        const py = (i * 293 + Math.floor(i / 7) * 31) % size;
+        ctx.fillRect(px, py, 2, 2);
+      }
+
+      // 2. Outer concentric double black ink rings (#111111)
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 7.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 286, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 274, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // 3. Curved classical serif typography in the parchment band (radius = 234)
+      function drawCurvedText(text, radius, centerAngle, isBottom, charSpacingRad) {
+        ctx.save();
+        ctx.fillStyle = '#111111';
+        ctx.font = 'bold 35px Georgia, "Times New Roman", serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        const chars = text.split('');
+        const widths = chars.map(ch => ctx.measureText(ch).width);
+        const totalArc = widths.reduce((sum, w) => sum + w / radius, 0) + charSpacingRad * (chars.length - 1);
+
+        let currentAngle = isBottom
+          ? centerAngle + totalArc / 2
+          : centerAngle - totalArc / 2;
+
+        chars.forEach((ch, idx) => {
+          const halfCharAngle = (widths[idx] / 2) / radius;
+          currentAngle += isBottom ? -halfCharAngle : halfCharAngle;
+
+          const x = cx + Math.cos(currentAngle) * radius;
+          const y = cy + Math.sin(currentAngle) * radius;
+
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(isBottom ? currentAngle - Math.PI / 2 : currentAngle + Math.PI / 2);
+          ctx.fillText(ch, 0, 0);
+          ctx.restore();
+
+          currentAngle += isBottom
+            ? -(halfCharAngle + charSpacingRad)
+            : (halfCharAngle + charSpacingRad);
+        });
+        ctx.restore();
+      }
+
+      drawCurvedText('BLAKE COLLEGE', 233, -Math.PI / 2, false, 0.016);
+      drawCurvedText('PRESS', 235, Math.PI / 2, true, 0.045);
+
+      // 4. Four crisp 4-point diamond stars at the four diagonal positions
+      function drawDiamondStar(angleRad, radius, outerR, innerR) {
+        const sx = cx + Math.cos(angleRad) * radius;
+        const sy = cy + Math.sin(angleRad) * radius;
+        ctx.save();
+        ctx.translate(sx, sy);
+        ctx.rotate(angleRad + Math.PI / 2);
+        ctx.fillStyle = '#111111';
+        ctx.beginPath();
+        for (let i = 0; i < 8; i++) {
+          const r = (i % 2 === 0) ? outerR : innerR;
+          const a = (i * Math.PI) / 4;
+          const px = Math.cos(a) * r;
+          const py = Math.sin(a) * r;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      const starAngles = [-2.50, -0.64, 2.48, 0.66];
+      starAngles.forEach(a => drawDiamondStar(a, 233, 13, 4.2));
+
+      // 5. Inner circular medallion clipped to r = 187
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, 187, 0, Math.PI * 2);
+      ctx.clip();
+
+      // Parchment base inside medallion
+      ctx.fillStyle = '#F5EFE2';
+      ctx.fillRect(cx - 190, cy - 190, 380, 380);
+
+      // Layered watercolor washes: golden amber (#E0B25A), burnt ochre (#C66835), smoky slate (#6E7371)
+      function paintWash(color, alpha, pathFn) {
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        pathFn(ctx);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Golden amber solar glow & rising flame washes
+      paintWash('#E0B25A', 0.42, c => {
+        c.arc(cx, cy - 25, 175, 0, Math.PI * 2);
+      });
+      paintWash('#E0B25A', 0.50, c => {
+        c.moveTo(155, 480);
+        c.bezierCurveTo(135, 360, 185, 250, 235, 165);
+        c.bezierCurveTo(270, 240, 260, 360, 275, 485);
+      });
+      paintWash('#E0B25A', 0.50, c => {
+        c.moveTo(325, 485);
+        c.bezierCurveTo(335, 350, 365, 245, 425, 175);
+        c.bezierCurveTo(455, 270, 440, 390, 415, 485);
+      });
+
+      // Burnt ochre / sienna rising flame tongues
+      paintWash('#C66835', 0.46, c => {
+        c.moveTo(130, 340);
+        c.bezierCurveTo(118, 255, 155, 185, 225, 145);
+        c.bezierCurveTo(195, 215, 175, 280, 185, 365);
+      });
+      paintWash('#C66835', 0.52, c => {
+        c.moveTo(225, 475);
+        c.bezierCurveTo(210, 375, 248, 295, 232, 225);
+        c.bezierCurveTo(262, 275, 272, 375, 268, 480);
+      });
+      paintWash('#C66835', 0.52, c => {
+        c.moveTo(332, 480);
+        c.bezierCurveTo(325, 375, 355, 285, 395, 215);
+        c.bezierCurveTo(392, 305, 375, 385, 378, 480);
+      });
+      paintWash('#C66835', 0.40, c => {
+        c.moveTo(365, 465);
+        c.bezierCurveTo(395, 365, 455, 315, 468, 235);
+        c.bezierCurveTo(478, 335, 445, 420, 405, 480);
+      });
+
+      // Smoky slate-charcoal cloud washes (#6E7371)
+      paintWash('#6E7371', 0.46, c => {
+        c.moveTo(115, 395);
+        c.bezierCurveTo(115, 315, 165, 275, 215, 305);
+        c.bezierCurveTo(245, 335, 235, 425, 255, 478);
+        c.lineTo(145, 478);
+      });
+      paintWash('#6E7371', 0.44, c => {
+        c.moveTo(385, 395);
+        c.bezierCurveTo(395, 325, 450, 290, 478, 325);
+        c.bezierCurveTo(482, 400, 445, 455, 390, 478);
+      });
+
+      // 6. Radiating crisp black sunbeams behind the figure's solar crown
+      const headX = 300;
+      const headY = 178;
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 1.65;
+      for (let i = 0; i < 25; i++) {
+        const angle = -Math.PI + (i / 24) * Math.PI;
+        const rStart = 32;
+        const rEnd = (i % 2 === 0) ? 148 : 118;
+        ctx.beginPath();
+        ctx.moveTo(headX + Math.cos(angle) * rStart, headY + Math.sin(angle) * rStart);
+        ctx.lineTo(headX + Math.cos(angle) * rEnd, headY + Math.sin(angle) * rEnd);
+        ctx.stroke();
+      }
+
+      // 7. Expressive Blakean ink contour lines for rising flames & clouds
+      const inkFlamePaths = [
+        [[145, 310], [138, 240], [178, 185], [228, 152]],
+        [[212, 465], [198, 385], [242, 310], [228, 242]],
+        [[246, 475], [234, 395], [262, 320], [252, 265]],
+        [[338, 475], [332, 385], [362, 305], [350, 248]],
+        [[364, 470], [358, 375], [405, 295], [428, 232]],
+        [[392, 455], [412, 375], [462, 322], [472, 262]],
+        [[132, 372], [156, 332], [196, 342], [218, 388]],
+        [[148, 418], [178, 385], [212, 408], [236, 456]]
+      ];
+
+      ctx.strokeStyle = '#181818';
+      ctx.lineCap = 'round';
+      inkFlamePaths.forEach((pts, idx) => {
+        ctx.lineWidth = (idx % 2 === 0) ? 2.1 : 1.5;
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0], pts[0][1]);
+        ctx.bezierCurveTo(pts[1][0], pts[1][1], pts[2][0], pts[2][1], pts[3][0], pts[3][1]);
+        ctx.stroke();
+      });
+
+      // 8. Spiky 9-point Solar Crown behind head
+      ctx.fillStyle = '#E0B25A';
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 2.0;
+      ctx.beginPath();
+      const crownSpikes = 9;
+      for (let i = 0; i <= crownSpikes * 2; i++) {
+        const frac = i / (crownSpikes * 2);
+        const a = -Math.PI * 0.96 + frac * (Math.PI * 0.92);
+        const r = (i % 2 === 0) ? 21 : 34;
+        const px = headX + Math.cos(a) * r;
+        const py = headY + Math.sin(a) * r;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // 9. Central Classical Figure (completely inside the inner circle, symmetrical & crisp)
+      ctx.fillStyle = '#EFE9DD';
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 2.3;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+
+      // Right arm (viewer's left) extending to hold staff at (184, 256)
+      ctx.beginPath();
+      ctx.moveTo(266, 210);
+      ctx.quadraticCurveTo(228, 222, 184, 252);
+      ctx.lineTo(188, 262);
+      ctx.quadraticCurveTo(232, 236, 272, 228);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Left arm (viewer's right) extending cleanly inside the inner circle to (446, 198)
+      ctx.beginPath();
+      ctx.moveTo(334, 210);
+      ctx.quadraticCurveTo(382, 214, 424, 202);
+      // Open classical hand & fingers inside the inner circle
+      ctx.lineTo(444, 194);
+      ctx.lineTo(447, 198);
+      ctx.lineTo(432, 205);
+      ctx.lineTo(448, 202);
+      ctx.lineTo(449, 206);
+      ctx.lineTo(426, 213);
+      ctx.quadraticCurveTo(382, 228, 328, 228);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Main torso, hips, legs & non-overlapping bare feet
+      ctx.beginPath();
+      // Neck & shoulders
+      ctx.moveTo(291, 194);
+      ctx.lineTo(290, 205);
+      ctx.quadraticCurveTo(272, 206, 264, 214);
+      ctx.quadraticCurveTo(266, 232, 276, 242);
+      // Ribcage & waist (left side)
+      ctx.quadraticCurveTo(282, 264, 279, 286);
+      // Hip & outer right leg (viewer's left)
+      ctx.quadraticCurveTo(273, 318, 281, 356);
+      ctx.quadraticCurveTo(283, 396, 289, 434);
+      // Right bare foot (viewer's left)
+      ctx.lineTo(277, 444);
+      ctx.quadraticCurveTo(282, 449, 293, 444);
+      ctx.lineTo(297, 434);
+      // Inner leg line up to pelvis & down to left foot
+      ctx.lineTo(299, 322);
+      ctx.lineTo(302, 434);
+      // Left bare foot (viewer's right, cleanly separated)
+      ctx.lineTo(301, 448);
+      ctx.quadraticCurveTo(309, 452, 315, 446);
+      ctx.lineTo(311, 433);
+      // Outer left leg & hip (viewer's right)
+      ctx.quadraticCurveTo(319, 394, 319, 355);
+      ctx.quadraticCurveTo(327, 318, 321, 286);
+      // Waist & ribcage (right side)
+      ctx.quadraticCurveTo(318, 264, 324, 242);
+      ctx.quadraticCurveTo(334, 232, 336, 214);
+      ctx.quadraticCurveTo(328, 206, 310, 205);
+      ctx.lineTo(309, 194);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Subtle classical anatomical shading & musculature lines
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      // Clavicles & pectorals
+      ctx.moveTo(278, 216);
+      ctx.quadraticCurveTo(292, 221, 300, 217);
+      ctx.quadraticCurveTo(308, 221, 322, 216);
+      ctx.moveTo(277, 232);
+      ctx.quadraticCurveTo(289, 239, 299, 234);
+      ctx.moveTo(323, 232);
+      ctx.quadraticCurveTo(311, 239, 301, 234);
+      // Linea alba & abdominal contours
+      ctx.moveTo(300, 236);
+      ctx.lineTo(300, 282);
+      ctx.moveTo(288, 248);
+      ctx.quadraticCurveTo(286, 262, 290, 274);
+      ctx.moveTo(312, 248);
+      ctx.quadraticCurveTo(314, 262, 310, 274);
+      // Knee & shin definition
+      ctx.moveTo(286, 354);
+      ctx.quadraticCurveTo(291, 359, 295, 354);
+      ctx.moveTo(305, 354);
+      ctx.quadraticCurveTo(310, 359, 314, 354);
+      ctx.stroke();
+
+      // Curly hair locks flanking head
+      ctx.fillStyle = '#E0B25A';
+      ctx.lineWidth = 1.6;
+      [
+        [285, 174, 6], [283, 184, 5.5], [287, 191, 4.5],
+        [315, 174, 6], [317, 184, 5.5], [313, 191, 4.5]
+      ].forEach(([hx, hy, hr]) => {
+        ctx.beginPath();
+        ctx.arc(hx, hy, hr, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      });
+
+      // Head oval & classical serene facial features
+      ctx.fillStyle = '#EFE9DD';
+      ctx.lineWidth = 2.0;
+      ctx.beginPath();
+      ctx.ellipse(headX, headY, 13.5, 16.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      // Brows & eyes
+      ctx.moveTo(292, 174); ctx.lineTo(298, 175);
+      ctx.moveTo(302, 175); ctx.lineTo(308, 174);
+      ctx.arc(295, 177, 1.3, 0, Math.PI * 2);
+      ctx.arc(305, 177, 1.3, 0, Math.PI * 2);
+      // Nose & mouth
+      ctx.moveTo(300, 176); ctx.lineTo(299, 183); ctx.lineTo(301, 184);
+      ctx.moveTo(296, 188); ctx.quadraticCurveTo(300, 190, 304, 188);
+      ctx.stroke();
+
+      // 10. Diagonal Flaming Torch / Staff held in right hand (viewer's left)
+      // Cleanly separated from background flame lines
+      ctx.save();
+      // Staff shaft from (216, 206) to (136, 344)
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 5.5;
+      ctx.beginPath();
+      ctx.moveTo(216, 206);
+      ctx.lineTo(136, 344);
+      ctx.stroke();
+
+      ctx.strokeStyle = '#E6D8B8';
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(216, 206);
+      ctx.lineTo(136, 344);
+      ctx.stroke();
+
+      // Bottom spear-like finial at (126, 362)
+      ctx.fillStyle = '#D6C299';
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(139, 340);
+      ctx.lineTo(141, 351);
+      ctx.lineTo(123, 368);
+      ctx.lineTo(131, 345);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Top torch cup & crisp teardrop flame at (226, 184)
+      ctx.fillStyle = '#C66835';
+      ctx.beginPath();
+      ctx.moveTo(213, 207);
+      ctx.quadraticCurveTo(212, 192, 229, 180);
+      ctx.quadraticCurveTo(227, 198, 219, 210);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Re-draw gripping fingers over the staff at (185, 256)
+      ctx.fillStyle = '#EFE9DD';
+      ctx.beginPath();
+      ctx.ellipse(185, 256, 6.5, 5, -0.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.restore(); // End inner medallion clip
+
+      // 11. Crisp inner medallion black border rings
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 5.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 188, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 195, 0, Math.PI * 2);
+      ctx.stroke();
+
+      return canvas.toDataURL('image/png');
+    }
+
+    let currentSealDataURL = '';
+
+    function applySealToAllSlots(dataUrl) {
+      currentSealDataURL = dataUrl;
+      document.querySelectorAll('.bcp-seal-img').forEach(img => {
+        img.src = dataUrl;
+      });
+      const fav = document.getElementById('dynamic-favicon');
+      if (fav) fav.href = dataUrl;
+    }
+
+    function handleSealUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        if (e.target && e.target.result) {
+          applySealToAllSlots(e.target.result);
+          showNotice(`Loaded custom seal image "${file.name}" across the masthead, sidebar, charter, and PDF specimen.`);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* ========================================================================
+       2. APPLICATION STATE & INTERDISCIPLINARY ARCHIVE DATA
+       ======================================================================== */
+    const state = {
+      view: 'index',
+      sealInk: 'color',
+      artifactFilter: 'ALL',
+      disciplineFilter: 'ALL',
+      searchQuery: '',
+      activePaperId: 'BCP-MON-001',
+      scriptoriumTab: 'wire',
+      wireStream: 'ALL',
+      visitedPapers: new Set(),
+      expandedAbstracts: new Set()
+    };
+
+    try {
+      const savedVisited = JSON.parse(localStorage.getItem('bcp_visited_papers') || '[]');
+      savedVisited.forEach(id => state.visitedPapers.add(id));
+    } catch (e) {}
+
+    const bountiesList = [
+      {
+        id: 'BNT-01',
+        prefix: 'TRN',
+        title: 'Meerson, F. Z. (1973) — Adaptation, Stress, and Prophylaxis (Russian Monograph, Ch. 2–4)',
+        subtitle: 'Open Collective Ledger #OC-011 · Annotated English translation of physiological adaptation & cellular stress resistance.',
+        raised: 1175,
+        goal: 1500
+      },
+      {
+        id: 'BNT-02',
+        prefix: 'TRN',
+        title: 'Rashevsky, N. (1954) & Rosen, R. — Early Relational Biology & Topological Mappings Archive',
+        subtitle: 'Open Collective Ledger #OC-014 · Critical edition & commentary linking set-theoretic biology to non-mechanistic philosophy.',
+        raised: 960,
+        goal: 1200
+      },
+      {
+        id: 'BNT-03',
+        prefix: 'PRT',
+        title: 'Open-Hardware Differential Micro-Calorimetry & Soil-Light Spectral Field Kit',
+        subtitle: 'Open Collective Ledger #OC-016 · Bill of materials, calibration code, and ecological field validation across altitudes.',
+        raised: 1305,
+        goal: 1500
+      }
+    ];
+
+    const publicationsList = [
+      {
+        id: 'BCP-MON-001',
+        artifact: 'MON',
+        title: 'Phase Transitions & Oxidative Coherence',
+        author: 'Fellow M. Vance',
+        rankLabel: 'Guild Fellow • Physiology',
+        rankClass: '',
+        joined: 'Jan 2024',
+        pubCount: 6,
+        disciplines: ['Physiology', 'Mathematics'],
+        submittedAgo: '4 days ago',
+        doi: '10.5281/zenodo.841029',
+        reviewedBy: 'Fellow R. Solis (Mathematics), Fellow E. Lind (Physiology)',
+        signature: 'M. Vance — Interfacial Water & Cellular Energetics // BCP-MON-001',
+        abstract: 'Conventional membrane-pump physiology treats intracellular water as an isotropic dilute solution governed by discrete ion channels. Synthesizing Gilbert Ling’s association-induction hypothesis with cooperative statistical mechanics, this monograph models oxidative metabolism as an ordering field that polarizes multilayered macromolecular water.',
+        bibtex: `@article{vance2026phase,\n  title={Phase Transitions and Oxidative Coherence},\n  author={Vance, M.},\n  journal={Blake College Press Monographs},\n  number={BCP-MON-001},\n  year={2026},\n  doi={10.5281/zenodo.841029}\n}`,
+        sections: [
+          {
+            heading: '§ 1. Beyond Stochastic Membrane-Pump Reductionism',
+            paragraphs: [
+              'For nearly a century, cellular physiology has rested upon a mechanical partition: a semi-permeable lipid bilayer studded with energy-consuming pumps presumed to maintain steep transmembrane gradients of potassium and sodium against passive diffusion.<span class="sn-ref">[1]</span> Thermodynamic accounting demonstrates that resting cellular respiration cannot supply the energy required to operate such pumps simultaneously.',
+              'Viewed instead as a coherent protein-water-ion matrix, continuous oxidative phosphorylation and carbon dioxide production act as cardinal adsorbents that polarize multilayered intracellular water.<span class="sn-ref">[2]</span>'
+            ]
+          },
+          {
+            heading: '§ 2. Cooperative Phase Partitioning',
+            paragraphs: [
+              'Under sustained oxidative flux, ATP binding induces an inductive electron-withdrawing shift along the polypeptide backbone, favoring hydrated potassium adsorption over sodium:'
+            ],
+            equation: 'ΔG_total = ΔH_adsorption − T · ΔS_multilayer(H₂O) + μ_CO₂ · Δn_carbamino   (Eq. 2.1)',
+            afterEq: [
+              'When metabolic oxidation is interrupted, intracellular water undergoes a sharp cooperative phase transition from ordered multilayers to bulk-like solvent water.<span class="sn-ref">[3]</span>'
+            ]
+          }
+        ],
+        sidenotes: [
+          { num: '1', text: 'Gilbert N. Ling, <em>A Physical Theory of the Living State</em> (Blaisdell, 1962), Ch. 8.' },
+          { num: '2', text: 'Ray Peat, &ldquo;Water: The Forgotten Biological Molecule,&rdquo; <em>Ray Peat’s Newsletter</em> (1998).' },
+          { num: '3', text: 'Compare Nasonov’s 1949 sorption theory in <strong>BCP-TRN-001</strong>.' }
+        ],
+        replies: [
+          {
+            author: 'Fellow R. Solis',
+            rankLabel: 'Guild Fellow • Mathematics',
+            rankClass: 'math',
+            joined: 'Mar 2024',
+            pubCount: 5,
+            disciplines: 'Mathematics, Philosophy',
+            timestamp: 'Nov 16, 2026 · 09:42 UTC',
+            quoteFrom: 'Fellow M. Vance, post #1',
+            quoteText: 'When metabolic oxidation is interrupted, intracellular water undergoes a sharp cooperative phase transition from ordered multilayers to bulk-like solvent water.',
+            body: 'Treating ΔS_multilayer as linear holds in the quiescent regime, but near the phase-transition threshold (~40% ATP depletion), nearest-neighbor Ising cooperativity produces a sharp cusp. Introducing a cooperativity exponent γ allows direct fitting against pulsed NMR T1 relaxation curves.',
+            signature: 'R. Solis — Relational Topology & Non-Ergodic Systems // BCP-MON-002'
+          }
+        ]
+      },
+      {
+        id: 'BCP-TRN-001',
+        artifact: 'TRN',
+        title: 'Nasonov: Local Reaction of Protoplasm',
+        author: 'Trans. E. Lind',
+        rankLabel: 'Guild Fellow • Translations',
+        rankClass: 'trn',
+        joined: 'May 2024',
+        pubCount: 5,
+        disciplines: ['Physiology', 'Philosophy'],
+        submittedAgo: '11 days ago',
+        doi: '10.5281/zenodo.839412',
+        reviewedBy: 'Fellow M. Vance (Physiology), Fellow H. Thorne (Philosophy)',
+        signature: 'E. Lind — Slavic & German Scientific Archives // BCP-TRN-001',
+        abstract: 'Annotated English translation of Dmitri Nasonov and Viktor Aleksandrov’s foundational Leningrad monograph on paranecrosis and the sorption theory of cellular excitation, accompanied by philosophical commentary on holistic versus mechanistic biology.',
+        bibtex: `@book{nasonov2026local,\n  title={Local Reaction of Protoplasm and Spreading Excitation},\n  author={Nasonov, Dmitri N.},\n  translator={Lind, E.},\n  publisher={Blake College Press},\n  number={BCP-TRN-001},\n  year={2026},\n  doi={10.5281/zenodo.839412}\n}`,
+        sections: [
+          {
+            heading: '§ 1. Paranecrosis & Holistic Cellular Response',
+            paragraphs: [
+              'Working in Leningrad during the 1930s and 1940s, Dmitri Nasonov demonstrated that diverse physical and chemical stimuli elicit a unified, reversible conformational condensation of native protoplasmic proteins, which he termed <em>paranecrosis</em>.<span class="sn-ref">[1]</span>'
+            ]
+          },
+          {
+            heading: '§ 2. Phase Sorption Relation',
+            paragraphs: [
+              'Solute partitioning between external medium and cytoplasmic coacervate follows the non-membrane relation:'
+            ],
+            equation: 'C_cytoplasm = Q · C_medium + A_max · (k · C_medium) / (1 + k · C_medium)   (Eq. 1.4)',
+            afterEq: [
+              'Philosophically, Nasonov’s work anticipates later critiques of reductionist mechanism by treating the living cell as an indivisible responsive whole.'
+            ]
+          }
+        ],
+        sidenotes: [
+          { num: '1', text: 'D. N. Nasonov & V. Ya. Aleksandrov, <em>Reaktsiya zhivogo veshchestva na vneshnie vozdeistviya</em> (1940).' }
+        ],
+        replies: [
+          {
+            author: 'Fellow H. Thorne',
+            rankLabel: 'Guild Fellow • Philosophy',
+            rankClass: 'math',
+            joined: 'Feb 2024',
+            pubCount: 4,
+            disciplines: 'Philosophy, Poetics',
+            timestamp: 'Nov 10, 2026 · 14:15 UTC',
+            quoteFrom: 'Trans. E. Lind, post #1',
+            quoteText: 'Diverse physical and chemical stimuli elicit a unified, reversible conformational condensation of native protoplasmic proteins, which he termed paranecrosis.',
+            body: 'Retaining Nasonov’s Greek coinage "paranecrosis" rather than flattening it into modern "cellular stress" preserves the philosophical distinction between adaptive reversible reorganization and passive mechanical damage.',
+            signature: 'H. Thorne — 18th-Century Natural Philosophy & Poetics // BCP-TRN-002'
+          }
+        ]
+      },
+      {
+        id: 'BCP-MON-002',
+        artifact: 'MON',
+        title: 'Relational Topology & Non-Ergodic Systems',
+        author: 'Fellow R. Solis',
+        rankLabel: 'Guild Fellow • Mathematics',
+        rankClass: 'math',
+        joined: 'Mar 2024',
+        pubCount: 5,
+        disciplines: ['Mathematics', 'Philosophy'],
+        submittedAgo: '16 days ago',
+        doi: '10.5281/zenodo.838920',
+        reviewedBy: 'Fellow S. Kovács (Mathematics), Fellow H. Thorne (Philosophy)',
+        signature: 'R. Solis — Relational Topology & Non-Ergodic Systems // BCP-MON-002',
+        abstract: 'Develops category-theoretic and topological closure conditions for self-maintaining organisms following Robert Rosen’s (M,R)-systems, proving why state-space phase portraits of living processes violate classical Boltzmann ergodicity.',
+        bibtex: `@article{solis2026relational,\n  title={Relational Topology and Non-Ergodic Systems},\n  author={Solis, R.},\n  journal={Blake College Press Monographs},\n  number={BCP-MON-002},\n  year={2026},\n  doi={10.5281/zenodo.838920}\n}`,
+        sections: [
+          {
+            heading: '§ 1. Closed-to-Efficient-Causation Mappings',
+            paragraphs: [
+              'Unlike Newtonian machines whose phase space is fixed a priori, an organism continuously rewrites its own boundary conditions through metabolic repair and replication mappings.<span class="sn-ref">[1]</span>'
+            ]
+          },
+          {
+            heading: '§ 2. Non-Ergodic Time Averages vs. Ensemble Averages',
+            paragraphs: [
+              'When an observable f(x(t)) evolves along a history-dependent developmental trajectory, the ensemble expectation diverges permanently from the individual trajectory time average:'
+            ],
+            equation: 'lim_{T→∞} (1/T) ∫₀ᵀ f(x(t)) dt  ≠  ∫_Ω f(x) dμ(x)   (Ergodicity Breaking)',
+            afterEq: [
+              'This theorem establishes the formal foundation for the statistical audit presented in <strong>BCP-CRT-001</strong>.'
+            ]
+          }
+        ],
+        sidenotes: [
+          { num: '1', text: 'Robert Rosen, <em>Life Itself: A Comprehensive Inquiry into the Nature, Origin, and Fabrication of Life</em> (1991).' }
+        ],
+        replies: []
+      },
+      {
+        id: 'BCP-PRT-001',
+        artifact: 'PRT',
+        title: 'Open-Source Differential Respirometry & Soil-Light Assay',
+        author: 'Fellow K. Alverez',
+        rankLabel: 'Guild Fellow • Ecology',
+        rankClass: '',
+        joined: 'Apr 2024',
+        pubCount: 4,
+        disciplines: ['Physiology', 'Ecology'],
+        submittedAgo: '22 days ago',
+        doi: '10.5281/zenodo.838104',
+        reviewedBy: 'Fellow M. Vance (Physiology), Fellow S. Kovács (Mathematics)',
+        signature: 'K. Alverez — Open Instrumentation & Altitude Ecology Lab // BCP-PRT-001',
+        abstract: 'A complete open-hardware specification for paired dual-chamber NDIR CO2/O2 gas exchange and spectral irradiance logging across both human resting respirometry and living soil-microbial ecosystems.',
+        bibtex: `@techreport{alverez2026respirometry,\n  title={Open-Source Differential Respirometry and Soil-Light Assay},\n  author={Alverez, K.},\n  institution={Blake College Press},\n  number={BCP-PRT-001},\n  year={2026},\n  doi={10.5281/zenodo.838104}\n}`,
+        sections: [
+          {
+            heading: '§ 1. Unified Gas-Exchange & Spectral Calibration',
+            paragraphs: [
+              'Both rhizosphere soil respiration and mammalian oxidative metabolism respond sensitively to ambient barometric pressure, temperature, and red/near-infrared solar irradiance.<span class="sn-ref">[1]</span> Barometric-corrected respiratory quotient (RQ) is computed continuously via:'
+            ],
+            equation: 'RQ = ΔF_CO₂ / ΔF_O₂ = (PetCO₂ − PiCO₂) / (PiO₂ − PetO₂)   (Eq. 3.1)',
+            afterEq: [
+              'Full KiCad schematics, Python serial telemetry scripts, and negative-control drift logs are bundled in the Zenodo archive.'
+            ]
+          }
+        ],
+        sidenotes: [
+          { num: '1', text: 'Ray Peat’s early agricultural and soil-light writings in Eugene emphasized shared bioenergetic principles across soil, plants, and animals.' }
+        ],
+        replies: []
+      },
+      {
+        id: 'BCP-CRT-001',
+        artifact: 'CRT',
+        title: 'Audit of Linear Regression Fallacies in Biological Modeling',
+        author: 'Fellow S. Kovács',
+        rankLabel: 'Guild Fellow • Mathematics',
+        rankClass: 'math',
+        joined: 'Jun 2024',
+        pubCount: 3,
+        disciplines: ['Mathematics', 'Philosophy'],
+        submittedAgo: '1 month ago',
+        doi: '10.5281/zenodo.836904',
+        reviewedBy: 'Fellow R. Solis (Mathematics), Fellow M. Vance (Physiology)',
+        signature: 'S. Kovács — Applied Mathematics & Statistical Audits // BCP-CRT-001',
+        abstract: 'A methodological audit demonstrating how ordinary least-squares (OLS) regression across pooled cross-sectional cohorts obscures nonlinear hysteresis loops, threshold bifurcations, and ecological fallacies.',
+        bibtex: `@article{kovacs2026audit,\n  title={Audit of Linear Regression Fallacies in Biological Modeling},\n  author={Kovacs, S.},\n  journal={Blake College Press Critiques},\n  number={BCP-CRT-001},\n  year={2026},\n  doi={10.5281/zenodo.836904}\n}`,
+        sections: [
+          {
+            heading: '§ 1. Hysteresis Loops & Spurious Zero Correlations',
+            paragraphs: [
+              'When an adaptive system traces a closed hysteresis loop in state space, projecting paired observations onto a single linear regression line routinely yields r ≈ 0 despite deterministic coupling:<span class="sn-ref">[1]</span>'
+            ],
+            equation: '∮_Γ Y(X) dX ≠ 0   ⇒   Cov_pooled(X, Y) → 0',
+            afterEq: [
+              'We provide non-parametric phase-space reconstruction routines in Julia and Python as open replacements.'
+            ]
+          }
+        ],
+        sidenotes: [
+          { num: '1', text: 'Follows directly from the non-ergodicity theorem in <strong>BCP-MON-002</strong>.' }
+        ],
+        replies: []
+      },
+      {
+        id: 'BCP-TRN-002',
+        artifact: 'TRN',
+        title: "Blake's Prophetic Books & 18th-Century Natural Philosophy",
+        author: 'Ed. H. Thorne',
+        rankLabel: 'Guild Fellow • Poetics',
+        rankClass: 'math',
+        joined: 'Feb 2024',
+        pubCount: 4,
+        disciplines: ['Poetics', 'Philosophy'],
+        submittedAgo: '1 month ago',
+        doi: '10.5281/zenodo.835120',
+        reviewedBy: 'Fellow R. Solis (Philosophy), Fellow E. Lind (Poetics)',
+        signature: 'H. Thorne — Blakean Poetics & Epistemology // BCP-TRN-002',
+        abstract: 'A diplomatic plain-text edition and commentary situating William Blake’s 1790–1795 illuminated books alongside 18th-century vitalist natural philosophy, Erasmus Darwin, Joseph Priestley, and Ray Peat’s 1960 master’s thesis on Blakean perception.',
+        bibtex: `@book{thorne2026blake,\n  title={Blake's Prophetic Books and 18th-Century Natural Philosophy},\n  editor={Thorne, H.},\n  publisher={Blake College Press},\n  number={BCP-TRN-002},\n  year={2026},\n  doi={10.5281/zenodo.835120}\n}`,
+        sections: [
+          {
+            heading: '§ 1. Cleansing the Doors of Perception',
+            paragraphs: [
+              'In <em>The Marriage of Heaven and Hell</em> and <em>The Book of Urizen</em>, William Blake critiques Newtonian-Lockean mechanism not out of hostility to observation, but because passive sensory empiricism mistakes dead abstractions for living reality.<span class="sn-ref">[1]</span>'
+            ]
+          }
+        ],
+        sidenotes: [
+          { num: '1', text: 'Analyzed in Ray Peat’s 1960 University of Oregon M.A. thesis, which directly inspired the founding of Blake College in 1962.' }
+        ],
+        replies: []
+      }
+    ];
+
+    const wireDispatches = [
+      { time: '11-19 08:14', stream: '#translation-desk', user: '@elind', text: 'Completed English draft of Meerson (1973) Ch. 3. Cross-checking Russian terminology against [[BCP-TRN-001]].' },
+      { time: '11-19 09:02', stream: '#editorial-proofs', user: '@rsolis', text: 'Verified category-theoretic commutative diagrams for [[BCP-MON-002]]; ready to link directly into [[BCP-CRT-001]].' },
+      { time: '11-19 10:45', stream: '#lab-bench', user: '@kalverez', text: 'Uploaded altitude soil-respiration calibration datasets from [[BCP-PRT-001]] to Resource Vault VAULT-04.' },
+      { time: '11-19 11:30', stream: '#general-inquiry', user: '@hthorne', text: 'Transcribed 18th-century annotations on Joseph Priestley’s oxygen experiments for [[BCP-TRN-002]].' },
+      { time: '11-19 13:18', stream: '#general-inquiry', user: '@mvance', text: 'Reminder: every monograph in the Working Desk requires sign-off from at least two Fellows across distinct disciplines.' }
+    ];
+
+    const workingDrafts = [
+      {
+        id: 'DRAFT-014',
+        type: 'TRN',
+        title: 'Meerson (1973): Adaptation, Stress, and Prophylaxis (Ch. 1–4)',
+        lead: 'Fellow E. Lind',
+        stage: 'Seeking Cross-Review',
+        signoffs: [
+          { label: 'Physiology Check', done: true, reviewer: 'M. Vance' },
+          { label: 'Philosophy Check', done: false, reviewer: 'Pending' }
+        ]
+      },
+      {
+        id: 'DRAFT-015',
+        type: 'MON',
+        title: 'Categorical Morphogenesis & Self-Organizing Developmental Fields',
+        lead: 'Fellow R. Solis',
+        stage: 'Seeking Cross-Review',
+        signoffs: [
+          { label: 'Mathematics Check', done: true, reviewer: 'S. Kovács' },
+          { label: 'Physiology Check', done: false, reviewer: 'Pending' }
+        ]
+      },
+      {
+        id: 'DRAFT-016',
+        type: 'PRT',
+        title: 'Low-Cost Optical Spectrometer for Canopy & Soil Irradiance Ratios',
+        lead: 'Fellow K. Alverez',
+        stage: 'Drafting',
+        signoffs: [
+          { label: 'Ecology Check', done: false, reviewer: 'Pending' },
+          { label: 'Mathematics Check', done: false, reviewer: 'Pending' }
+        ]
+      },
+      {
+        id: 'DRAFT-017',
+        type: 'CRT',
+        title: 'Poetics of Scientific Metaphor: Mechanism vs. Organism Since 1790',
+        lead: 'Fellow H. Thorne',
+        stage: 'Typesetting in Typst',
+        signoffs: [
+          { label: 'Poetics Check', done: true, reviewer: 'E. Lind' },
+          { label: 'Philosophy Check', done: true, reviewer: 'R. Solis' }
+        ]
+      }
+    ];
+
+    const vaultRecords = [
+      { id: 'VAULT-01', citation: 'Troshin, A. S. (1956). Problema kletochnoi pronitsaemosti [Problems of Cell Permeability]. Moscow: AN SSSR. (600dpi Russian PDF + OCR)', requester: '@elind', status: 'Fulfilled — PDF Attached' },
+      { id: 'VAULT-02', citation: 'Rashevsky, N. (1960). Mathematical Biophysics: Physico-Mathematical Foundations of Biology (3rd Ed., Dover).', requester: '@rsolis', status: 'Open Request' },
+      { id: 'VAULT-03', citation: 'Priestley, J. (1775). Experiments and Observations on Different Kinds of Air, Vol. II. (High-res plate scan)', requester: '@hthorne', status: 'Fulfilled — PDF Attached' },
+      { id: 'VAULT-04', citation: 'Alverez, K. (2026). Differential NDIR Gas-Exchange & Soil-Light Field Telemetry CSVs (Companion to BCP-PRT-001)', requester: '@kalverez', status: 'Fulfilled — Archive Ready' }
+    ];
+
+    const labEquipment = [
+      { id: 'BENCH-01', instrument: 'Dual-Beam UV-Vis Spectrophotometer (190–1100 nm) + Quartz Cuvettes', custodian: 'Fellow M. Vance (Melbourne, AU)', availability: 'Available for Assay Runs', requested: false },
+      { id: 'BENCH-02', instrument: 'Sidestream NDIR O₂ / CO₂ Indirect Calorimetry & Soil Respirometry Rig', custodian: 'Fellow K. Alverez (Portland, OR)', availability: 'Available for Replication', requested: false },
+      { id: 'BENCH-03', instrument: 'High-Resolution Planetary Scanner (600 dpi) & Multilingual OCR Workstation', custodian: 'Fellow E. Lind (London, UK)', availability: 'Available for Archival Scans', requested: false },
+      { id: 'BENCH-04', instrument: '128-Core Compute Node for Non-Ergodic Dynamical & Topological Simulations', custodian: 'Fellow S. Kovács (Zurich, CH)', availability: 'By Correspondence', requested: false }
+    ];
+
+    /* ========================================================================
+       3. INITIALIZATION & NAVIGATION CONTROLLERS
+       ======================================================================== */
+    function init() {
+      // Generate and apply the embedded 600x600 Blake College Press seal immediately
+      const sealDataUrl = generateBlakeSealDataURL();
+      applySealToAllSlots(sealDataUrl);
+
+      renderBountiesTable();
+      renderPublicationIndex();
+      renderWireLog();
+      renderWorkingDesk();
+      renderVaultAndEquipment();
+      updateSidebarTotals();
+    }
+
+    function showNotice(message) {
+      document.getElementById('inline-notice-text').textContent = message;
+      document.getElementById('inline-notice').classList.add('visible');
+    }
+
+    function dismissNotice() {
+      document.getElementById('inline-notice').classList.remove('visible');
+    }
+
+    function setSealInkMode(mode) {
+      state.sealInk = mode;
+      const btnColor = document.getElementById('ink-btn-color');
+      const btnWoodcut = document.getElementById('ink-btn-woodcut');
+
+      if (mode === 'woodcut') {
+        document.body.classList.add('woodcut-ink-mode');
+        btnWoodcut.classList.add('active');
+        btnColor.classList.remove('active');
+      } else {
+        document.body.classList.remove('woodcut-ink-mode');
+        btnColor.classList.add('active');
+        btnWoodcut.classList.remove('active');
+      }
+    }
+
+    function switchView(viewName) {
+      state.view = viewName;
+      dismissNotice();
+
+      ['index', 'thread', 'charter', 'scriptorium'].forEach(v => {
+        const el = document.getElementById('view-' + v);
+        el.style.display = (v === viewName) ? (v === 'index' ? 'grid' : 'block') : 'none';
+      });
+
+      const masthead = document.getElementById('main-masthead');
+      const sealImg = document.getElementById('masthead-seal-img');
+      const heading = document.getElementById('masthead-heading');
+      const sub = document.getElementById('masthead-sub');
+      const rightStatus = document.getElementById('masthead-right-status');
+      const topBtn = document.getElementById('top-scriptorium-btn');
+      const crumb = document.getElementById('breadcrumb-path');
+
+      if (viewName === 'scriptorium') {
+        masthead.classList.add('scriptorium-mode');
+        sealImg.setAttribute('width', '70');
+        sealImg.setAttribute('height', '70');
+        heading.textContent = 'THE SCRIPTORIUM — BLAKE COLLEGE FELLOWS WORKSPACE';
+        sub.textContent = 'Private Interdisciplinary Workshop · Pre-Print Peer Review, Dispatch Wire & Archival Vault';
+        rightStatus.innerHTML = `
+          <div><strong>Logged in as @fellow.guest</strong> | Access: <span class="mono">APPROVED FELLOW</span></div>
+          <div style="margin-top: 2px;">Git + Typst Pipeline Active &middot; <button type="button" style="color: #93C5FD; background: none; border: none; padding: 0; cursor: pointer; text-decoration: underline;" onclick="switchView('index')">[Return to Public Forum]</button></div>
+        `;
+        topBtn.textContent = 'FELLOWS: [EXIT SCRIPTORIUM]';
+        crumb.innerHTML = `
+          <button type="button" class="forum-link" onclick="switchView('index')">Blake College Press</button>
+          <span>&rsaquo;</span>
+          <strong>The Scriptorium (Private Fellows Workspace)</strong>
+        `;
+      } else {
+        masthead.classList.remove('scriptorium-mode');
+        sealImg.setAttribute('width', '76');
+        sealImg.setAttribute('height', '76');
+        heading.textContent = 'BLAKE COLLEGE PRESS';
+        sub.textContent = 'An Independent Interdisciplinary Research Guild & Open-Access Publishing House';
+        rightStatus.innerHTML = `
+          <div><strong>Open Commons</strong> | License: <span class="mono">CC-BY-4.0</span> | Archive: <span class="mono">Zenodo DOI</span></div>
+          <div style="margin-top: 2px;">
+            Physiology &middot; Philosophy &middot; Mathematics &middot; Poetics &middot; Ecology &middot;
+            <button type="button" class="forum-link" onclick="toggleScriptorium()">[Enter Scriptorium]</button>
+          </div>
+        `;
+        topBtn.textContent = 'FELLOWS: [ENTER SCRIPTORIUM]';
+
+        if (viewName === 'index') {
+          crumb.innerHTML = `
+            <button type="button" class="forum-link" onclick="selectArtifactBoard('ALL')">Blake College Press</button>
+            <span>&rsaquo;</span>
+            <strong>Forum Index &amp; Master Catalog (${state.artifactFilter})</strong>
+          `;
+        } else if (viewName === 'charter') {
+          crumb.innerHTML = `
+            <button type="button" class="forum-link" onclick="switchView('index')">Blake College Press</button>
+            <span>&rsaquo;</span>
+            <strong>Charter &amp; Colophon</strong>
+          `;
+        }
+      }
+
+      syncTopAndTabHighlights();
+      window.scrollTo(0, 0);
+    }
+
+    function toggleScriptorium() {
+      switchView(state.view === 'scriptorium' ? 'index' : 'scriptorium');
+    }
+
+    function handleFellowLogin(event) {
+      event.preventDefault();
+      const handle = document.getElementById('login-handle').value.trim() || '@fellow.guest';
+      document.getElementById('wire-handle-input').value = handle;
+      document.getElementById('vault-user-input').value = handle;
+      switchView('scriptorium');
+      showNotice(`Authenticated into The Scriptorium as ${handle}.`);
+    }
+
+    function selectArtifactBoard(artCode) {
+      state.artifactFilter = artCode;
+      switchView('index');
+      syncFilterButtons();
+      renderPublicationIndex();
+    }
+
+    function selectDiscipline(discName) {
+      state.disciplineFilter = discName;
+      switchView('index');
+      syncFilterButtons();
+      renderPublicationIndex();
+    }
+
+    function scrollToBounties() {
+      switchView('index');
+      setTimeout(() => {
+        const el = document.getElementById('pinned-bounties-block');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 30);
+    }
+
+    function syncTopAndTabHighlights() {
+      document.querySelectorAll('.util-btn').forEach(btn => {
+        const b = btn.getAttribute('data-board');
+        btn.classList.toggle('active',
+          (state.view === 'charter' && b === 'CHARTER') ||
+          (state.view === 'index' && b === state.artifactFilter)
+        );
+      });
+
+      document.querySelectorAll('.reddit-tabmenu button').forEach(btn => {
+        const t = btn.getAttribute('data-tab');
+        btn.classList.toggle('selected',
+          (state.view === 'charter' && t === 'CHARTER') ||
+          (state.view === 'index' && t === state.artifactFilter)
+        );
+      });
+    }
+
+    function syncFilterButtons() {
+      document.querySelectorAll('[data-art]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-art') === state.artifactFilter);
+      });
+      document.querySelectorAll('[data-disc]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-disc') === state.disciplineFilter);
+      });
+    }
+
+    function updateSidebarTotals() {
+      const totalNotes = publicationsList.reduce((acc, p) => acc + p.replies.length + 1, 0) + 206;
+      const totalBounty = bountiesList.reduce((acc, b) => acc + b.raised, 0);
+      document.getElementById('sidebar-notes-total').textContent = totalNotes;
+      document.getElementById('sidebar-bounty-total').textContent = '$' + totalBounty.toLocaleString();
+    }
+
+    /* ========================================================================
+       4. PINNED OPEN COLLECTIVE BOUNTIES TABLE
+       ======================================================================== */
+    function renderBountiesTable() {
+      const tbody = document.getElementById('bounties-table-body');
+      tbody.innerHTML = bountiesList.map((b, idx) => {
+        const pct = Math.min(100, Math.round((b.raised / b.goal) * 100));
+        return `
+          <tr>
+            <td><span class="prefix-badge ${b.prefix.toLowerCase()}">[${b.prefix}]</span></td>
+            <td>
+              <div><strong>${b.title}</strong></div>
+              <div style="font-size: 11px; color: #555555; margin-top: 2px;">${b.subtitle}</div>
+            </td>
+            <td>
+              <div class="progress-track" aria-hidden="true">
+                <div class="progress-fill ${pct >= 85 ? 'high' : ''}" style="width: ${pct}%;"></div>
+              </div>
+              <span class="mono"><strong>${pct}%</strong> ($${b.raised.toLocaleString()} / $${b.goal.toLocaleString()})</span>
+            </td>
+            <td>
+              <button type="button" class="retro-btn" onclick="pledgeTwentyFive(${idx})">[+ Pledge $25]</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function pledgeTwentyFive(idx) {
+      bountiesList[idx].raised += 25;
+      renderBountiesTable();
+      updateSidebarTotals();
+      showNotice(`Recorded $25 Open Collective pledge toward "${bountiesList[idx].title}".`);
+    }
+
+    /* ========================================================================
+       5. MASTER CATALOG — DENSE OLD-REDDIT / VBULLETIN INDEX
+       ======================================================================== */
+    function handleSidebarSearch(event) {
+      event.preventDefault();
+      const val = document.getElementById('concordance-search-input').value.trim();
+      state.searchQuery = val;
+      switchView('index');
+
+      const statusRow = document.getElementById('search-status-row');
+      if (val) {
+        statusRow.style.display = 'block';
+        document.getElementById('search-term-display').textContent = `"${val}"`;
+      } else {
+        statusRow.style.display = 'none';
+      }
+      renderPublicationIndex();
+    }
+
+    function clearCatalogSearch() {
+      state.searchQuery = '';
+      document.getElementById('concordance-search-input').value = '';
+      document.getElementById('search-status-row').style.display = 'none';
+      renderPublicationIndex();
+    }
+
+    function renderPublicationIndex() {
+      const container = document.getElementById('publication-index-list');
+      const q = state.searchQuery.toLowerCase();
+
+      const filtered = publicationsList.filter(p => {
+        const matchArt = state.artifactFilter === 'ALL' || p.artifact === state.artifactFilter;
+        const matchDisc = state.disciplineFilter === 'ALL' || p.disciplines.includes(state.disciplineFilter);
+        const matchQuery = !q ||
+          p.id.toLowerCase().includes(q) ||
+          p.title.toLowerCase().includes(q) ||
+          p.author.toLowerCase().includes(q) ||
+          p.abstract.toLowerCase().includes(q);
+        return matchArt && matchDisc && matchQuery;
+      });
+
+      document.getElementById('index-count-label').textContent =
+        `Showing ${filtered.length} of ${publicationsList.length} publications`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="padding: 16px; text-align: center; color: #555555;">
+            No publications match the current filter combination.
+            <button type="button" class="forum-link" style="margin-left: 6px; font-weight: bold;" onclick="resetAllFilters()">[Reset All Filters]</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map((p, idx) => {
+        const isVisited = state.visitedPapers.has(p.id);
+        const isExpanded = state.expandedAbstracts.has(p.id);
+        const notesCount = p.replies.length + 1;
+        const discTagsHtml = p.disciplines.map(d =>
+          `<button type="button" class="disc-flair" onclick="selectDiscipline('${d}')">[${d}]</button>`
+        ).join(' ');
+
+        return `
+          <div class="reddit-row">
+            <div class="row-rank">${idx + 1}.</div>
+
+            <div class="row-stat-col">
+              <span class="row-notes-num mono">${notesCount} notes</span>
+              <span class="row-cc-badge mono">CC-BY</span>
+            </div>
+
+            <div class="row-body-col">
+              <div class="row-title-line">
+                <span class="prefix-badge ${p.artifact.toLowerCase()}">[${p.artifact}]</span>
+                <button type="button" class="paper-title-link ${isVisited ? 'visited' : ''}" onclick="openPaperThread('${p.id}')">
+                  ${p.title}
+                </button>
+              </div>
+
+              <div class="row-meta-subline">
+                <button type="button" class="expando-toggle" aria-expanded="${isExpanded}" onclick="toggleAbstractExpando('${p.id}')">
+                  ${isExpanded ? '−' : '+'}
+                </button>
+                submitted ${p.submittedAgo} by <strong>${p.author}</strong> &bull;
+                ${discTagsHtml} &bull;
+                <span class="mono">${p.id}</span> &bull;
+                <span class="mono">DOI: ${p.doi}</span>
+              </div>
+
+              <div class="row-action-links">
+                <button type="button" onclick="openPaperThread('${p.id}')">${notesCount} notes &middot; open thread</button>
+                <button type="button" onclick="openPaperWithSpecimen('${p.id}')">typst pdf</button>
+                <button type="button" onclick="toggleAbstractExpando('${p.id}')">${isExpanded ? 'hide abstract' : 'abstract & bibtex'}</button>
+              </div>
+
+              <div class="inline-expando-box ${isExpanded ? 'open' : ''}">
+                <div style="margin-bottom: 5px;"><strong>Abstract:</strong> ${p.abstract}</div>
+                <div class="mono" style="color: #555555; margin-bottom: 4px;">Peer Verification: ${p.reviewedBy}</div>
+                <div class="bibtex-code">${p.bibtex}</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" class="retro-btn neutral" onclick="copyBibtexRecord('${p.id}')">Copy BibTeX</button>
+                  <span class="mono" id="bib-copied-${p.id}" style="color: #1A7F37;"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function resetAllFilters() {
+      state.artifactFilter = 'ALL';
+      state.disciplineFilter = 'ALL';
+      clearCatalogSearch();
+      syncFilterButtons();
+      syncTopAndTabHighlights();
+      renderPublicationIndex();
+    }
+
+    function toggleAbstractExpando(paperId) {
+      if (state.expandedAbstracts.has(paperId)) {
+        state.expandedAbstracts.delete(paperId);
+      } else {
+        state.expandedAbstracts.add(paperId);
+      }
+      renderPublicationIndex();
+    }
+
+    function copyBibtexRecord(paperId) {
+      const p = publicationsList.find(item => item.id === paperId);
+      if (!p) return;
+      const ta = document.createElement('textarea');
+      ta.value = p.bibtex;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        const label = document.getElementById(`bib-copied-${paperId}`);
+        if (label) label.textContent = 'BibTeX copied to clipboard.';
+      } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    /* ========================================================================
+       6. XENFORO POSTBIT THREAD & PAPER READING VIEW
+       ======================================================================== */
+    function openPaperThread(paperId) {
+      const p = publicationsList.find(item => item.id === paperId);
+      if (!p) return;
+
+      state.visitedPapers.add(paperId);
+      try {
+        localStorage.setItem('bcp_visited_papers', JSON.stringify(Array.from(state.visitedPapers)));
+      } catch (e) {}
+
+      state.activePaperId = paperId;
+      switchView('thread');
+      renderPublicationIndex();
+
+      document.getElementById('typst-specimen-panel').classList.remove('open');
+      document.getElementById('toggle-specimen-btn').textContent = '[Print / Typeset PDF Specimen]';
+
+      document.getElementById('breadcrumb-path').innerHTML = `
+        <button type="button" class="forum-link" onclick="switchView('index')">Blake College Press</button>
+        <span>&rsaquo;</span>
+        <button type="button" class="forum-link" onclick="selectArtifactBoard('${p.artifact}')">Output Sector [${p.artifact}]</button>
+        <span>&rsaquo;</span>
+        <strong>${p.id}</strong>
+      `;
+
+      document.getElementById('thread-header-tags').innerHTML = `
+        <span class="prefix-badge ${p.artifact.toLowerCase()}">[${p.artifact}]</span>
+        ${p.disciplines.map(d => `<span class="disc-flair">[${d}]</span>`).join(' ')}
+      `;
+      document.getElementById('thread-header-title').textContent = p.title;
+      document.getElementById('thread-header-meta').textContent =
+        `Catalog ID: ${p.id} · DOI: ${p.doi} · Peer Verified by: ${p.reviewedBy}`;
+
+      renderThreadPostbits(p);
+    }
+
+    function openPaperWithSpecimen(paperId) {
+      openPaperThread(paperId);
+      toggleTypstSpecimen(true);
+    }
+
+    function toggleTypstSpecimen(forceOpen) {
+      const panel = document.getElementById('typst-specimen-panel');
+      const btn = document.getElementById('toggle-specimen-btn');
+      const willOpen = (typeof forceOpen === 'boolean') ? forceOpen : !panel.classList.contains('open');
+
+      if (willOpen) {
+        const p = publicationsList.find(item => item.id === state.activePaperId) || publicationsList[0];
+        document.getElementById('typst-specimen-content').innerHTML = `
+          <div style="text-align: center; border-bottom: 2px solid #111111; padding-bottom: 14px; margin-bottom: 16px;">
+            <img
+              class="bcp-seal-img typst-woodcut-stamp"
+              src="${currentSealDataURL}"
+              alt="Blake College Press Woodcut Seal"
+              width="85"
+              height="85"
+              style="margin: 0 auto;"
+            />
+            <div class="mono" style="margin-top: 6px; letter-spacing: 0.08em; font-weight: bold;">
+              BLAKE COLLEGE PRESS &middot; ${p.id}
+            </div>
+            <h2 style="font-family: Georgia, serif; font-size: 20px; margin: 6px 0 4px 0;">${p.title}</h2>
+            <div class="mono" style="color: #444444;">
+              ${p.author} &middot; DOI: ${p.doi} &middot; License: CC-BY-4.0
+            </div>
+          </div>
+          <div class="georgia-prose" style="font-size: 14.5px; max-width: 100%;">
+            <p style="background: #F6F8FA; border-left: 3px solid #111111; padding: 8px 10px;">
+              <strong>Abstract:</strong> ${p.abstract}
+            </p>
+            ${p.sections.map(sec => `
+              <h4 style="font-size: 15px; margin: 12px 0 4px 0;">${sec.heading}</h4>
+              <p style="margin: 0 0 8px 0;">${sec.paragraphs[0].replace(/<span class="sn-ref">.*?<\/span>/g, '')}</p>
+            `).join('')}
+          </div>
+          <div class="mono" style="margin-top: 16px; padding-top: 8px; border-top: 1px solid #111111; display: flex; justify-content: space-between; font-size: 10px;">
+            <span>TYPESET VIA TYPST ARCHIVAL ENGINE</span>
+            <span>WOODCUT MONOCHROME IMPRINT &middot; PAGE 1</span>
+          </div>
+        `;
+        panel.classList.add('open');
+        btn.textContent = '[Hide Typeset PDF Specimen]';
+      } else {
+        panel.classList.remove('open');
+        btn.textContent = '[Print / Typeset PDF Specimen]';
+      }
+    }
+
+    function renderThreadPostbits(p) {
+      const container = document.getElementById('thread-postbits-container');
+
+      const bodySectionsHtml = p.sections.map(sec => `
+        <h3>${sec.heading}</h3>
+        ${(sec.paragraphs || []).map(para => `<p>${para}</p>`).join('')}
+        ${sec.equation ? `<div class="equation-box">${sec.equation}</div>` : ''}
+        ${(sec.afterEq || []).map(para => `<p>${para}</p>`).join('')}
+      `).join('');
+
+      const sidenotesHtml = p.sidenotes.map(sn => `
+        <div class="tufte-note-item">
+          <strong class="mono" style="color: #FF4500;">[${sn.num}]</strong> ${sn.text}
+        </div>
+      `).join('');
+
+      let html = `
+        <article class="xen-postbit-row" id="post-1">
+          <div class="postbit-left">
+            <div>
+              <span class="postbit-author-name">${p.author}</span>
+              <span class="fellow-rank-strip ${p.rankClass}">${p.rankLabel}</span>
+            </div>
+            <div class="postbit-seal-avatar">
+              <img class="bcp-seal-img toggleable-seal" src="${currentSealDataURL}" alt="Blake College Press Seal" width="52" height="52" />
+            </div>
+            <div class="postbit-meta-list">
+              <div class="postbit-meta-line"><span>Joined:</span><strong>${p.joined}</strong></div>
+              <div class="postbit-meta-line"><span>Published:</span><strong>${p.pubCount}</strong></div>
+              <div class="postbit-meta-line"><span>Disciplines:</span><strong>${p.disciplines.join(', ')}</strong></div>
+            </div>
+          </div>
+
+          <div class="postbit-right">
+            <div>
+              <div class="postbit-top-bar">
+                <span>Published ${p.submittedAgo} &middot; <span class="mono">${p.id}</span> &middot; License: CC-BY-4.0</span>
+                <span class="mono"><strong>#1</strong></span>
+              </div>
+              <div class="postbit-content-area">
+                <div class="paper-sidenote-layout">
+                  <div class="georgia-prose">
+                    <div style="background-color: #F6F8FA; border-left: 3px solid #2B4C7E; padding: 8px 10px; margin-bottom: 14px; font-size: 14.5px;">
+                      <strong>Abstract &mdash;</strong> ${p.abstract}
+                    </div>
+                    ${bodySectionsHtml}
+                  </div>
+                  <aside class="tufte-margin-box">
+                    <div class="tufte-margin-head">Tufte Margin Sidenotes</div>
+                    ${sidenotesHtml}
+                  </aside>
+                </div>
+                <div class="postbit-sig">${p.signature}</div>
+              </div>
+            </div>
+
+            <div class="postbit-footer-bar">
+              <span class="mono" style="color: #666666;">DOI: ${p.doi}</span>
+              <button type="button" class="retro-btn neutral" onclick="quoteIntoReply('${p.author}', 1, '${p.abstract.substring(0, 140).replace(/'/g, "\\'")}...')">[Quote]</button>
+            </div>
+          </div>
+        </article>
+      `;
+
+      p.replies.forEach((rep, idx) => {
+        const postNum = idx + 2;
+        const quoteBlock = rep.quoteFrom ? `
+          <div class="bb-quote">
+            <div class="bb-quote-head">${rep.quoteFrom} wrote:</div>
+            <div class="bb-quote-body">${rep.quoteText}</div>
+          </div>
+        ` : '';
+
+        html += `
+          <article class="xen-postbit-row" id="post-${postNum}">
+            <div class="postbit-left">
+              <div>
+                <span class="postbit-author-name">${rep.author}</span>
+                <span class="fellow-rank-strip ${rep.rankClass}">${rep.rankLabel}</span>
+              </div>
+              <div class="postbit-seal-avatar">
+                <img class="bcp-seal-img toggleable-seal" src="${currentSealDataURL}" alt="Blake College Press Seal" width="52" height="52" />
+              </div>
+              <div class="postbit-meta-list">
+                <div class="postbit-meta-line"><span>Joined:</span><strong>${rep.joined}</strong></div>
+                <div class="postbit-meta-line"><span>Published:</span><strong>${rep.pubCount}</strong></div>
+                <div class="postbit-meta-line"><span>Disciplines:</span><strong>${rep.disciplines}</strong></div>
+              </div>
+            </div>
+
+            <div class="postbit-right">
+              <div>
+                <div class="postbit-top-bar">
+                  <span>${rep.timestamp}</span>
+                  <span class="mono"><strong>#${postNum}</strong></span>
+                </div>
+                <div class="postbit-content-area">
+                  ${quoteBlock}
+                  <div class="georgia-prose" style="font-size: 15.5px;">${rep.body}</div>
+                  <div class="postbit-sig">${rep.signature}</div>
+                </div>
+              </div>
+
+              <div class="postbit-footer-bar">
+                <span class="mono" style="color: #666666;">Epistolary Thread Record</span>
+                <button type="button" class="retro-btn neutral" onclick="quoteIntoReply('${rep.author}', ${postNum}, '${rep.body.replace(/<[^>]+>/g, '').substring(0, 140).replace(/'/g, "\\'")}...')">[Quote]</button>
+              </div>
+            </div>
+          </article>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function quoteIntoReply(author, postNum, snippet) {
+      const ta = document.getElementById('reply-text-input');
+      ta.value = `[QUOTE="${author}, post #${postNum}"]${snippet}[/QUOTE]\n\n` + ta.value;
+      document.getElementById('thread-reply-box').scrollIntoView({ behavior: 'smooth' });
+      ta.focus();
+    }
+
+    function wrapReplyBB(openTag, closeTag) {
+      const ta = document.getElementById('reply-text-input');
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      const sel = ta.value.substring(start, end);
+      ta.value = ta.value.substring(0, start) + openTag + sel + closeTag + ta.value.substring(end);
+      ta.focus();
+    }
+
+    function submitThreadReply(event) {
+      event.preventDefault();
+      const p = publicationsList.find(item => item.id === state.activePaperId);
+      if (!p) return;
+
+      const author = document.getElementById('reply-author-input').value.trim();
+      const rankLabel = document.getElementById('reply-rank-input').value;
+      const refSec = document.getElementById('reply-ref-input').value.trim();
+      let rawText = document.getElementById('reply-text-input').value.trim();
+      if (!rawText) return;
+
+      let quoteFrom = null;
+      let quoteText = null;
+      const qMatch = rawText.match(/\[QUOTE="([^"]+)"\]([\s\S]*?)\[\/QUOTE\]/i);
+      if (qMatch) {
+        quoteFrom = qMatch[1];
+        quoteText = qMatch[2].trim();
+        rawText = rawText.replace(qMatch[0], '').trim();
+      }
+
+      let safeHtml = rawText
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\[B\]([\s\S]*?)\[\/B\]/gi, '<strong>$1</strong>')
+        .replace(/\[I\]([\s\S]*?)\[\/I\]/gi, '<em>$1</em>')
+        .replace(/\[TEX\]([\s\S]*?)\[\/TEX\]/gi, '<span class="mono" style="background:#F0F3F5;padding:1px 4px;">$1</span>');
+
+      if (refSec) {
+        safeHtml = `<div class="mono" style="color:#2B4C7E;margin-bottom:5px;">[${refSec}]</div>` + safeHtml;
+      }
+
+      const rankClass = (rankLabel.includes('Mathematics') || rankLabel.includes('Philosophy') || rankLabel.includes('Poetics'))
+        ? 'math'
+        : (rankLabel === 'Contributor' ? 'contrib' : '');
+
+      p.replies.push({
+        author,
+        rankLabel,
+        rankClass,
+        joined: 'Nov 2026',
+        pubCount: 1,
+        disciplines: 'Interdisciplinary',
+        timestamp: 'Just now',
+        quoteFrom,
+        quoteText,
+        body: safeHtml,
+        signature: `${author} — Blake College Press Forum`
+      });
+
+      document.getElementById('reply-text-input').value = '';
+      document.getElementById('reply-ref-input').value = '';
+      renderThreadPostbits(p);
+      renderPublicationIndex();
+      updateSidebarTotals();
+      showNotice(`Posted reply #${p.replies.length + 1} to ${p.id}.`);
+    }
+
+    /* ========================================================================
+       7. THE SCRIPTORIUM (PRIVATE FELLOWS WORKSPACE)
+       ======================================================================== */
+    function switchScriptoriumTab(tabKey) {
+      state.scriptoriumTab = tabKey;
+      ['wire', 'desk', 'vault'].forEach(k => {
+        document.getElementById('scrip-tab-' + k).style.display = (k === tabKey) ? 'block' : 'none';
+      });
+      document.querySelectorAll('.scrip-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-stab') === tabKey);
+      });
+    }
+
+    function filterWireStream(streamName) {
+      state.wireStream = streamName;
+      document.querySelectorAll('[data-stream]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-stream') === streamName);
+      });
+      renderWireLog();
+    }
+
+    function formatWireLinks(text) {
+      const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return escaped.replace(/\[\[(BCP-[A-Z]{3}-\d{3})\]\]/g, (match, id) => {
+        if (publicationsList.some(p => p.id === id)) {
+          return `<button type="button" class="forum-link mono" style="font-weight:bold;" onclick="openPaperThread('${id}')">[[${id}]]</button>`;
+        }
+        return `<span class="mono">[[${id}]]</span>`;
+      });
+    }
+
+    function renderWireLog() {
+      const box = document.getElementById('dispatch-wire-log');
+      const filtered = wireDispatches.filter(m => state.wireStream === 'ALL' || m.stream === state.wireStream);
+      box.innerHTML = filtered.map(m => `
+        <div class="wire-entry">
+          <span class="mono" style="color: #666666;">${m.time}</span>
+          <span class="mono" style="color: #2B4C7E; font-weight: bold;">${m.stream}</span>
+          <strong class="mono">${m.user}</strong>
+          <div>${formatWireLinks(m.text)}</div>
+        </div>
+      `).join('');
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function submitWirePost(event) {
+      event.preventDefault();
+      const user = document.getElementById('wire-handle-input').value.trim() || '@fellow.guest';
+      const stream = document.getElementById('wire-stream-select').value;
+      const text = document.getElementById('wire-msg-input').value.trim();
+      if (!text) return;
+
+      const now = new Date();
+      const ts = `11-19 ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      wireDispatches.push({ time: ts, stream, user, text });
+      document.getElementById('wire-msg-input').value = '';
+      renderWireLog();
+    }
+
+    function renderWorkingDesk() {
+      const tbody = document.getElementById('working-desk-tbody');
+      tbody.innerHTML = workingDrafts.map((d, idx) => {
+        const checksHtml = d.signoffs.map(s =>
+          s.done
+            ? `<div class="mono" style="color: #1A7F37;">&#10003; ${s.label} (${s.reviewer})</div>`
+            : `<div class="mono" style="color: #B45309;">&#9711; ${s.label}: Pending</div>`
+        ).join('');
+
+        const hasPending = d.signoffs.some(s => !s.done);
+        return `
+          <tr>
+            <td class="mono"><strong>${d.id}</strong></td>
+            <td><span class="prefix-badge ${d.type.toLowerCase()}">[${d.type}]</span></td>
+            <td>
+              <div><strong>${d.title}</strong></div>
+              <div style="font-size: 11px; color: #555555;">Lead: ${d.lead}</div>
+            </td>
+            <td class="mono">${d.stage}</td>
+            <td>${checksHtml}</td>
+            <td>
+              ${hasPending
+                ? `<button type="button" class="retro-btn navy" onclick="signOffAsReviewer(${idx})">[Sign Off as Reviewer]</button>`
+                : `<span class="mono" style="color: #1A7F37; font-weight: bold;">Ready for Zenodo DOI</span>`}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function signOffAsReviewer(idx) {
+      const draft = workingDrafts[idx];
+      if (!draft) return;
+      const next = draft.signoffs.find(s => !s.done);
+      if (next) {
+        next.done = true;
+        next.reviewer = '@fellow.guest';
+      }
+      if (draft.signoffs.every(s => s.done)) {
+        draft.stage = 'Typesetting in Typst';
+      }
+      renderWorkingDesk();
+      showNotice(`Recorded Fellow peer-review sign-off on ${draft.id}.`);
+    }
+
+    function renderVaultAndEquipment() {
+      document.getElementById('vault-table-body').innerHTML = vaultRecords.map(v => `
+        <tr>
+          <td class="mono"><strong>${v.id}</strong></td>
+          <td>${v.citation}</td>
+          <td class="mono">${v.requester}</td>
+          <td class="mono" style="color: ${v.status.startsWith('Fulfilled') ? '#1A7F37' : '#B45309'}; font-weight: bold;">
+            ${v.status}
+          </td>
+        </tr>
+      `).join('');
+
+      document.getElementById('equipment-table-body').innerHTML = labEquipment.map((eq, idx) => `
+        <tr>
+          <td class="mono"><strong>${eq.id}</strong></td>
+          <td>${eq.instrument}</td>
+          <td class="mono">${eq.custodian}</td>
+          <td class="mono">${eq.availability}</td>
+          <td>
+            ${eq.requested
+              ? `<span class="mono" style="color: #1A7F37; font-weight: bold;">Inquiry Logged</span>`
+              : `<button type="button" class="retro-btn" onclick="requestEquipment(${idx})">[Request Bench]</button>`}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function submitVaultRequest(event) {
+      event.preventDefault();
+      const requester = document.getElementById('vault-user-input').value.trim() || '@fellow.guest';
+      const citation = document.getElementById('vault-cite-input').value.trim();
+      if (!citation) return;
+
+      const id = 'VAULT-0' + (vaultRecords.length + 1);
+      vaultRecords.unshift({ id, citation, requester, status: 'Open Request' });
+      document.getElementById('vault-cite-input').value = '';
+      renderVaultAndEquipment();
+      showNotice(`Added archival scan request ${id} to the Resource Vault.`);
+    }
+
+    function requestEquipment(idx) {
+      labEquipment[idx].requested = true;
+      renderVaultAndEquipment();
+      showNotice(`Sent bench coordination inquiry to ${labEquipment[idx].custodian} (${labEquipment[idx].id}).`);
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
